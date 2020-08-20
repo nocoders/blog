@@ -6,7 +6,6 @@
     <modules>
         <module>common</module>
         <module>mapper</module>
-        <module>service</module>
         <module>admin</module>
         <module>web</module>
         <module>security</module>
@@ -31,6 +30,8 @@
         <swagger2.version>2.9.2</swagger2.version>
         <mybatis-generator.version>1.3.7</mybatis-generator.version>
         <pagehelper.version>5.1.8</pagehelper.version>
+        <swagger-models.version>1.6.0</swagger-models.version>
+        <swagger-annotations.version>1.6.0</swagger-annotations.version>
     </properties>
 
     <dependencies>
@@ -72,6 +73,10 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>${mysql.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
         </dependency>
         <dependency>
             <groupId>com.alibaba</groupId>
@@ -117,7 +122,22 @@
             <artifactId>springfox-swagger-ui</artifactId>
             <version>2.8.0</version>
         </dependency>
-
+        <!--解决Swagger 2.9.2版本NumberFormatException-->
+        <dependency>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-models</artifactId>
+            <version>${swagger-models.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-annotations</artifactId>
+            <version>${swagger-annotations.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+            <version>2.3.0</version>
+        </dependency>
         <!--Hutool Java工具包-->
         <dependency>
             <groupId>cn.hutool</groupId>
