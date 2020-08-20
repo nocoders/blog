@@ -1,7 +1,7 @@
 server:
   port: 38238
   servlet:
-    context-path:/crop
+    context-path: /crop
 spring:
   rabbitmq:
     addresses: 127.0.0.1
@@ -15,3 +15,7 @@ spring:
       url: jdbc:mysql://10.71.164.30:43306/blog?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&allowMultiQueries=true
       username: root
       password: root
+mybatis:
+  mapper-locations:
+    - classpath:mapper/*.xml
+    - classpath*:com/**/mapper/*.xml
