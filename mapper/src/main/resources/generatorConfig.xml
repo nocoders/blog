@@ -15,7 +15,7 @@
         <plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>
         <!--生成mapper.xml时覆盖原文件-->
         <plugin type="org.mybatis.generator.plugins.UnmergeableXmlMappersPlugin" />
-        <commentGenerator type="com.crop.blog.generator.CommentGenerator">
+        <commentGenerator type="com.crop.mapper.generator.CommentGenerator">
             <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
             <property name="suppressAllComments" value="true"/>
             <property name="suppressDate" value="true"/>
@@ -30,11 +30,11 @@
             <property name="nullCatalogMeansCurrent" value="true" />
         </jdbcConnection>
 
-        <javaModelGenerator targetPackage="com.crop.blog.model" targetProject="mapper\src\main\java"/>
+        <javaModelGenerator targetPackage="com.crop.mapper.model" targetProject="mapper\src\main\java"/>
 
-        <sqlMapGenerator targetPackage="com.crop.blog.mapper" targetProject="mapper\src\main\resources"/>
+        <sqlMapGenerator targetPackage="com.crop.mapper.mapper" targetProject="mapper\src\main\resources"/>
 
-        <javaClientGenerator type="XMLMAPPER" targetPackage="com.crop.blog.mapper"
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.crop.mapper.mapper"
                              targetProject="mapper\src\main\java"/>
         <!--生成全部表tableName设为%-->
         <table tableName="%">
