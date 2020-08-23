@@ -31,7 +31,7 @@ public class CUser implements Serializable {
     @ApiModelProperty(value = "修改时间")
     private Date updateTime;
 
-    @ApiModelProperty(value = "状态：0-启用，1-禁用")
+    @ApiModelProperty(value = "状态：1-启用，0-禁用")
     private Boolean status;
 
     private static final long serialVersionUID = 1L;
