@@ -4,7 +4,6 @@ import com.crop.mapper.dto.UserParam;
 import com.crop.mapper.model.CUser;
 
 /**
- * TODO
  *
  * @author linmeng
  * @version 1.0
@@ -12,4 +11,6 @@ import com.crop.mapper.model.CUser;
  */
 public interface UserService {
     CUser register(UserParam userParam);
+
+    String login(String userName, String password);
 }

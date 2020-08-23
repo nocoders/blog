@@ -10,9 +10,8 @@ import lombok.Getter;
  * @version 1.0
  * @date 22/8/2020 下午5:00
  */
-@Getter
 @AllArgsConstructor
-public enum  ResultCode {
+public enum  ResultCode implements IErrorCode{
     SUCCESS(200L, "操作成功"),
     FAILED(500L, "操作失败"),
     VALIDATE_FAILED(404L, "参数检验失败"),
@@ -21,4 +20,14 @@ public enum  ResultCode {
 
     private long code;
     private String message;
+
+    @Override
+    public long getCode() {
+        return code;
+    }
+
+    @Override
+    public String getMessage() {
+        return message;
+    }
 }

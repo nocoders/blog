@@ -20,5 +20,6 @@ create table c_user
    icon_url             varchar(128) default '' comment '头像url',
    create_time          timestamp default CURRENT_TIMESTAMP comment '创建时间',
    update_time          timestamp default CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP comment '修改时间',
+   status               tinyint(1) default 1 comment '状态：1-启用，0-禁用',
    primary key (id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户表';

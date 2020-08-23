@@ -31,6 +31,9 @@ public class CUser implements Serializable {
     @ApiModelProperty(value = "修改时间")
     private Date updateTime;
 
+    @ApiModelProperty(value = "状态：0-启用，1-禁用")
+    private Boolean status;
+
     private static final long serialVersionUID = 1L;
 
     public Long getId() {
@@ -105,6 +108,14 @@ public class CUser implements Serializable {
         this.updateTime = updateTime;
     }
 
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -120,6 +131,7 @@ public class CUser implements Serializable {
         sb.append(", iconUrl=").append(iconUrl);
         sb.append(", createTime=").append(createTime);
         sb.append(", updateTime=").append(updateTime);
+        sb.append(", status=").append(status);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

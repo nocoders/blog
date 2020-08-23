@@ -26,7 +26,13 @@ public class CommonResult<T> {
     public static <T> CommonResult<T> failed(String message) {
         return new CommonResult(ResultCode.FAILED.getCode(), message, null);
     }
-
+    /**
+     * 失败返回结果
+     * @param errorCode 错误码
+     */
+    public static <T> CommonResult<T> failed(IErrorCode errorCode) {
+        return new CommonResult<T>(errorCode.getCode(), errorCode.getMessage(), null);
+    }
     public static <T> CommonResult<T> validateFailed(String message) {
         return new CommonResult(ResultCode.VALIDATE_FAILED.getCode(), message, null);
     }
