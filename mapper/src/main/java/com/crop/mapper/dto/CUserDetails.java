@@ -1,4 +1,4 @@
-package com.crop.web.bo;
+package com.crop.mapper.dto;
 
 import com.crop.mapper.model.CUser;
 import lombok.AllArgsConstructor;

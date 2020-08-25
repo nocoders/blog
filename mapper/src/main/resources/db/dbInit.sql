@@ -34,7 +34,7 @@ create table c_article
     id                   bigint(20) not null auto_increment comment '主键id',
     user_id              bigint(20) not null comment '用户id',
     title                varchar(64) not null default '' comment '文章标题',
-    description          varchar(128) not null default '‘’' comment '文章描述',
+    description          varchar(128) not null default '' comment '文章描述',
     is_original          tinyint(1) default 1 comment '是否原创，1-原创，0-转载',
     status               tinyint(1) default 1 comment '状态，1-草稿，0-发布',
     views                int(10) default 0 comment '浏览量',
