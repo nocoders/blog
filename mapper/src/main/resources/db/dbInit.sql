@@ -24,17 +24,17 @@ create table c_user
    primary key (id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户表';
 
--- drop table if exists c_acticle;
+-- drop table if exists c_article;
 
 /*==============================================================*/
 /* Table: c_acticle                                             */
 /*==============================================================*/
-create table c_acticle
+create table c_article
 (
     id                   bigint(20) not null auto_increment comment '主键id',
     user_id              bigint(20) not null comment '用户id',
-    article_name         varchar(64) not null default '' comment '文章名称',
-    title                varchar(128) not null default '‘’' comment '文章标题',
+    title                varchar(64) not null default '' comment '文章标题',
+    description          varchar(128) not null default '‘’' comment '文章描述',
     is_original          tinyint(1) default 1 comment '是否原创，1-原创，0-转载',
     status               tinyint(1) default 1 comment '状态，1-草稿，0-发布',
     views                int(10) default 0 comment '浏览量',

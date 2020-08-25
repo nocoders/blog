@@ -4,18 +4,18 @@ import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
 import java.util.Date;
 
-public class CActicle implements Serializable {
+public class CArticle implements Serializable {
     @ApiModelProperty(value = "主键id")
     private Long id;
 
     @ApiModelProperty(value = "用户id")
     private Long userId;
 
-    @ApiModelProperty(value = "文章名称")
-    private String articleName;
-
     @ApiModelProperty(value = "文章标题")
     private String title;
+
+    @ApiModelProperty(value = "文章描述")
+    private String description;
 
     @ApiModelProperty(value = "是否原创，1-原创，0-转载")
     private Boolean isOriginal;
@@ -54,20 +54,20 @@ public class CActicle implements Serializable {
         this.userId = userId;
     }
 
-    public String getArticleName() {
-        return articleName;
-    }
-
-    public void setArticleName(String articleName) {
-        this.articleName = articleName;
-    }
-
     public String getTitle() {
         return title;
     }
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Boolean getIsOriginal() {
@@ -134,8 +134,8 @@ public class CActicle implements Serializable {
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
         sb.append(", userId=").append(userId);
-        sb.append(", articleName=").append(articleName);
         sb.append(", title=").append(title);
+        sb.append(", description=").append(description);
         sb.append(", isOriginal=").append(isOriginal);
         sb.append(", status=").append(status);
         sb.append(", views=").append(views);

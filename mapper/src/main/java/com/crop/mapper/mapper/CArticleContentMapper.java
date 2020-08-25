@@ -3,10 +3,8 @@ package com.crop.mapper.mapper;
 import com.crop.mapper.model.CArticleContent;
 import com.crop.mapper.model.CArticleContentExample;
 import java.util.List;
-
-import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-@Mapper
+
 public interface CArticleContentMapper {
     long countByExample(CArticleContentExample example);
 

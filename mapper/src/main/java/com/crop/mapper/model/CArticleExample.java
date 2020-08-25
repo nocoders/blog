@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class CActicleExample {
+public class CArticleExample {
     protected String orderByClause;
 
     protected boolean distinct;
 
     protected List<Criteria> oredCriteria;
 
-    public CActicleExample() {
+    public CArticleExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 
@@ -225,76 +225,6 @@ public class CActicleExample {
             return (Criteria) this;
         }
 
-        public Criteria andArticleNameIsNull() {
-            addCriterion("article_name is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andArticleNameIsNotNull() {
-            addCriterion("article_name is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andArticleNameEqualTo(String value) {
-            addCriterion("article_name =", value, "articleName");
-            return (Criteria) this;
-        }
-
-        public Criteria andArticleNameNotEqualTo(String value) {
-            addCriterion("article_name <>", value, "articleName");
-            return (Criteria) this;
-        }
-
-        public Criteria andArticleNameGreaterThan(String value) {
-            addCriterion("article_name >", value, "articleName");
-            return (Criteria) this;
-        }
-
-        public Criteria andArticleNameGreaterThanOrEqualTo(String value) {
-            addCriterion("article_name >=", value, "articleName");
-            return (Criteria) this;
-        }
-
-        public Criteria andArticleNameLessThan(String value) {
-            addCriterion("article_name <", value, "articleName");
-            return (Criteria) this;
-        }
-
-        public Criteria andArticleNameLessThanOrEqualTo(String value) {
-            addCriterion("article_name <=", value, "articleName");
-            return (Criteria) this;
-        }
-
-        public Criteria andArticleNameLike(String value) {
-            addCriterion("article_name like", value, "articleName");
-            return (Criteria) this;
-        }
-
-        public Criteria andArticleNameNotLike(String value) {
-            addCriterion("article_name not like", value, "articleName");
-            return (Criteria) this;
-        }
-
-        public Criteria andArticleNameIn(List<String> values) {
-            addCriterion("article_name in", values, "articleName");
-            return (Criteria) this;
-        }
-
-        public Criteria andArticleNameNotIn(List<String> values) {
-            addCriterion("article_name not in", values, "articleName");
-            return (Criteria) this;
-        }
-
-        public Criteria andArticleNameBetween(String value1, String value2) {
-            addCriterion("article_name between", value1, value2, "articleName");
-            return (Criteria) this;
-        }
-
-        public Criteria andArticleNameNotBetween(String value1, String value2) {
-            addCriterion("article_name not between", value1, value2, "articleName");
-            return (Criteria) this;
-        }
-
         public Criteria andTitleIsNull() {
             addCriterion("title is null");
             return (Criteria) this;
@@ -362,6 +292,76 @@ public class CActicleExample {
 
         public Criteria andTitleNotBetween(String value1, String value2) {
             addCriterion("title not between", value1, value2, "title");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionIsNull() {
+            addCriterion("description is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionIsNotNull() {
+            addCriterion("description is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionEqualTo(String value) {
+            addCriterion("description =", value, "description");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionNotEqualTo(String value) {
+            addCriterion("description <>", value, "description");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionGreaterThan(String value) {
+            addCriterion("description >", value, "description");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionGreaterThanOrEqualTo(String value) {
+            addCriterion("description >=", value, "description");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionLessThan(String value) {
+            addCriterion("description <", value, "description");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionLessThanOrEqualTo(String value) {
+            addCriterion("description <=", value, "description");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionLike(String value) {
+            addCriterion("description like", value, "description");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionNotLike(String value) {
+            addCriterion("description not like", value, "description");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionIn(List<String> values) {
+            addCriterion("description in", values, "description");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionNotIn(List<String> values) {
+            addCriterion("description not in", values, "description");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionBetween(String value1, String value2) {
+            addCriterion("description between", value1, value2, "description");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionNotBetween(String value1, String value2) {
+            addCriterion("description not between", value1, value2, "description");
             return (Criteria) this;
         }
 

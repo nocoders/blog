@@ -1,5 +1,6 @@
 package com.crop.security.util;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.extern.slf4j.Slf4j;
@@ -63,5 +64,45 @@ public class JwtTokenUtil {
          */
     public Date generateExpirationDate() {
         return new Date(System.currentTimeMillis() + expiration * 1000);
+    }
+
+    /**
+     * 根据token获取用户名
+     * @param token
+     * @author linmeng
+     * @date 24/8/2020 下午4:52
+     * @return java.lang.String
+     */
+    public String getUserNameFromToken(String  token){
+        String username;
+        try {
+            Claims claims = getClaimsFromToken(token);
+            username = claims.getSubject();
+        }catch (Exception e){
+            username = null;
+        }
+
+        return username;
+    }
+
+    /**
+     * 在token中获取负载
+     * @param token
+     * @author linmeng
+     * @date 24/8/2020 下午5:06
+     * @return io.jsonwebtoken.Claims
+     */
+    private Claims getClaimsFromToken(String token) {
+        Claims claims = null;
+        try {
+            claims = Jwts.parser()
+                    .setSigningKey(secret)
+                    .parseClaimsJws(token)
+                    .getBody();
+        }catch (Exception e){
+            log.error("JWT格式验证失败:{}",token);
+        }
+
+        return claims;
     }
 }

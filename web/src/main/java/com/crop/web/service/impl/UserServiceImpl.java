@@ -1,6 +1,7 @@
 package com.crop.web.service.impl;
 
 import com.crop.common.exception.Asserts;
+import com.crop.mapper.dao.UserDao;
 import com.crop.mapper.dto.UserParam;
 import com.crop.mapper.mapper.CUserMapper;
 import com.crop.mapper.model.CUser;
@@ -26,21 +27,18 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements UserService {
     @Autowired
-    private CUserMapper cUserMapper;
+    private UserDao userDao;
     @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
 
-    public UserServiceImpl() {
-    }
-
     @Override
     public CUser register(UserParam userParam) {
         CUserExample example = new CUserExample();
         example.createCriteria().andUserNameEqualTo(userParam.getUserName());
-        long count = this.cUserMapper.countByExample(example);
+        long count = userDao.countByExample(example);
         if (count > 0L) {
             return null;
         } else {
@@ -48,7 +46,7 @@ public class UserServiceImpl implements UserService {
             String password = passwordEncoder.encode(userParam.getPassword());
             userParam.setPassword(password);
             BeanUtils.copyProperties(userParam, user);
-            cUserMapper.insertSelective(user);
+            userDao.insertSelective(user);
             return user;
         }
     }
@@ -66,7 +64,7 @@ public class UserServiceImpl implements UserService {
     public String login(String userName, String password) {
         CUserExample userExample = new CUserExample();
         userExample.createCriteria().andUserNameEqualTo(userName).andStatusEqualTo(true);
-        List<CUser> cUsers = cUserMapper.selectByExample(userExample);
+        List<CUser> cUsers = userDao.selectByExample(userExample);
         if (CollectionUtils.isEmpty(cUsers)){
             Asserts.fail("用户名不正确");
         }

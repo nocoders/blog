@@ -23,15 +23,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry registry = http.authorizeRequests();
-        Iterator var3 = this.ignoreUrlsConfig().getUrls().iterator();
 
-        while(var3.hasNext()) {
-            String url = (String)var3.next();
-            ((ExpressionUrlAuthorizationConfigurer.AuthorizedUrl)registry.antMatchers(new String[]{url})).permitAll();
+        for (String url : ignoreUrlsConfig().getUrls()) {
+            registry.antMatchers(url).permitAll();
         }
 
-        ((ExpressionUrlAuthorizationConfigurer.AuthorizedUrl)registry.antMatchers(HttpMethod.OPTIONS)).permitAll();
-        ((HttpSecurity)((HttpSecurity)((ExpressionUrlAuthorizationConfigurer.AuthorizedUrl)((HttpSecurity)registry.and()).authorizeRequests().anyRequest()).authenticated().and()).csrf().disable()).sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        //允许跨域请求的OPTIONS请求
+        registry.antMatchers(HttpMethod.OPTIONS)
+                .permitAll();
+        // 任何请求需要身份认证
+        registry
+                // 关闭跨站请求防护及不使用session
+                .and()
+                .csrf()
+                .disable()
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
 
     @Bean
