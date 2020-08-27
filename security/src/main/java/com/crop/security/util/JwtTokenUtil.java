@@ -47,7 +47,7 @@ public class JwtTokenUtil {
     public String generatorToken(Map<String,Object> claims){
         return Jwts.builder()
                 .setClaims(claims)
-                .setExpiration(generateExpirationDate())
+                .setExpiration(generateExpirationDate((long)claims.get(CLAIM_KEY_CREATED)))
                 .signWith(SignatureAlgorithm.HS256,secret)
                 .compact();
     }
@@ -61,9 +61,10 @@ public class JwtTokenUtil {
 
         /**
          * 生成token的过期时间
+         * @param createTime 创建时间
          */
-    public Date generateExpirationDate() {
-        return new Date(System.currentTimeMillis() + expiration * 1000);
+    public Date generateExpirationDate(long createTime) {
+        return new Date(createTime + expiration * 1000);
     }
 
     /**

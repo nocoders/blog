@@ -23,6 +23,16 @@ public class CommonResult<T> {
         return new CommonResult(ResultCode.SUCCESS.getCode(), ResultCode.SUCCESS.getMessage(), data);
     }
 
+    /**
+     * 无参成功返回
+     * @author linmeng
+     * @date 27/8/2020 下午2:01
+     * @return com.crop.common.api.CommonResult<T>
+     */
+    public static <T> CommonResult<T> success() {
+        return new CommonResult(ResultCode.SUCCESS.getCode(), ResultCode.SUCCESS.getMessage(), null);
+    }
+
     public static <T> CommonResult<T> failed(String message) {
         return new CommonResult(ResultCode.FAILED.getCode(), message, null);
     }

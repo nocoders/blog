@@ -15,8 +15,14 @@ import javax.validation.constraints.NotNull;
  * @date 24/8/2020 下午2:59
  */
 @Data
-@ApiModel(value = "文章添加时参数",description = "文章添加时参数")
-public class ArticleAddParam {
+@ApiModel(value = "文章添加修改时参数",description = "文章添加修改时参数")
+public class ArticleUpdateParam {
+
+    @ApiModelProperty(value = "文章id,添加时不传递，修改时传递")
+    private Long id;
+
+    @ApiModelProperty(value = "用户id,添加时不传递，修改时传递")
+    private Long userId;
 
     @ApiModelProperty(value = "文章标题")
     @NotBlank(message = "文章标题不能为空")

@@ -665,6 +665,66 @@ public class CArticleExample {
             return (Criteria) this;
         }
 
+        public Criteria andCollectionsIsNull() {
+            addCriterion("collections is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCollectionsIsNotNull() {
+            addCriterion("collections is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCollectionsEqualTo(Integer value) {
+            addCriterion("collections =", value, "collections");
+            return (Criteria) this;
+        }
+
+        public Criteria andCollectionsNotEqualTo(Integer value) {
+            addCriterion("collections <>", value, "collections");
+            return (Criteria) this;
+        }
+
+        public Criteria andCollectionsGreaterThan(Integer value) {
+            addCriterion("collections >", value, "collections");
+            return (Criteria) this;
+        }
+
+        public Criteria andCollectionsGreaterThanOrEqualTo(Integer value) {
+            addCriterion("collections >=", value, "collections");
+            return (Criteria) this;
+        }
+
+        public Criteria andCollectionsLessThan(Integer value) {
+            addCriterion("collections <", value, "collections");
+            return (Criteria) this;
+        }
+
+        public Criteria andCollectionsLessThanOrEqualTo(Integer value) {
+            addCriterion("collections <=", value, "collections");
+            return (Criteria) this;
+        }
+
+        public Criteria andCollectionsIn(List<Integer> values) {
+            addCriterion("collections in", values, "collections");
+            return (Criteria) this;
+        }
+
+        public Criteria andCollectionsNotIn(List<Integer> values) {
+            addCriterion("collections not in", values, "collections");
+            return (Criteria) this;
+        }
+
+        public Criteria andCollectionsBetween(Integer value1, Integer value2) {
+            addCriterion("collections between", value1, value2, "collections");
+            return (Criteria) this;
+        }
+
+        public Criteria andCollectionsNotBetween(Integer value1, Integer value2) {
+            addCriterion("collections not between", value1, value2, "collections");
+            return (Criteria) this;
+        }
+
         public Criteria andCreateTimeIsNull() {
             addCriterion("create_time is null");
             return (Criteria) this;

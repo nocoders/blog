@@ -2,7 +2,7 @@ package com.crop.web.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.crop.mapper.dao.ArticleDao;
-import com.crop.mapper.dto.ArticleAddParam;
+import com.crop.mapper.dto.ArticleUpdateParam;
 import com.crop.mapper.dto.ArticleBean;
 import com.crop.mapper.dto.ArticlePageReq;
 import com.crop.mapper.dto.PageBean;
@@ -14,11 +14,11 @@ import com.crop.mapper.model.CUser;
 import com.crop.web.service.ArticleService;
 import com.github.pagehelper.PageHelper;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -37,9 +37,6 @@ public class ArticleServiceImpl implements ArticleService {
     @Autowired
     private CArticleContentMapper cArticleContentMapper;
 
-    @Autowired
-    private WebServiceImpl webService;
-
     /**
      * 文章添加，添加时
      * @param param 前端传递需要添加文章
@@ -49,7 +46,7 @@ public class ArticleServiceImpl implements ArticleService {
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public CArticle add(ArticleAddParam param, CUser user) {
+    public CArticle add(ArticleUpdateParam param, CUser user) {
 
         CArticle article = new CArticle();
         BeanUtil.copyProperties(param,article);
@@ -105,5 +102,33 @@ public class ArticleServiceImpl implements ArticleService {
         example.setOrderByClause("update_time desc");
 
         return articleDao.selectByExample(example);
+    }
+
+    /**
+     * 修改文章:检查文章是否存在，文章所属用户是否匹配
+     * @param param
+     * @author linmeng
+     * @date 27/8/2020 下午1:25
+     * @return int
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public int update(ArticleUpdateParam param) {
+        Long articleId = param.getId();
+        ArticleBean articleDetail = articleDao.getArticleDetailById(articleId);
+        if (null != articleDetail && param.getUserId().equals(articleDetail.getUserId())
+                && StringUtils.isNotBlank(articleDetail.getContent())){
+            CArticle cArticle = new CArticle();
+            BeanUtils.copyProperties(param,cArticle);
+            int articleCount = articleDao.updateByPrimaryKey(cArticle);
+            CArticleContent articleContent = new CArticleContent();
+            articleContent.setArticleId(articleId);
+            articleContent.setContent(param.getContent());
+            int contentCount = cArticleContentMapper.updateByPrimaryKey(articleContent);
+
+            return contentCount & articleCount;
+        }
+
+        return 0;
     }
 }

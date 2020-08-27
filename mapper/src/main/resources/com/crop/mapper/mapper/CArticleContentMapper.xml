@@ -2,8 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.crop.mapper.mapper.CArticleContentMapper">
   <resultMap id="BaseResultMap" type="com.crop.mapper.model.CArticleContent">
-    <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="article_id" jdbcType="BIGINT" property="articleId" />
+    <id column="article_id" jdbcType="BIGINT" property="articleId" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
@@ -69,7 +68,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, article_id, create_time, update_time
+    article_id, create_time, update_time
   </sql>
   <sql id="Blob_Column_List">
     content
@@ -110,11 +109,11 @@
     ,
     <include refid="Blob_Column_List" />
     from c_article_content
-    where id = #{id,jdbcType=BIGINT}
+    where article_id = #{articleId,jdbcType=BIGINT}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from c_article_content
-    where id = #{id,jdbcType=BIGINT}
+    where article_id = #{articleId,jdbcType=BIGINT}
   </delete>
   <delete id="deleteByExample" parameterType="com.crop.mapper.model.CArticleContentExample">
     delete from c_article_content
@@ -123,18 +122,12 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.crop.mapper.model.CArticleContent">
-    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
     insert into c_article_content (article_id, create_time, update_time, 
       content)
     values (#{articleId,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
       #{content,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.crop.mapper.model.CArticleContent">
-    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
     insert into c_article_content
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="articleId != null">
@@ -174,9 +167,6 @@
   <update id="updateByExampleSelective" parameterType="map">
     update c_article_content
     <set>
-      <if test="record.id != null">
-        id = #{record.id,jdbcType=BIGINT},
-      </if>
       <if test="record.articleId != null">
         article_id = #{record.articleId,jdbcType=BIGINT},
       </if>
@@ -196,8 +186,7 @@
   </update>
   <update id="updateByExampleWithBLOBs" parameterType="map">
     update c_article_content
-    set id = #{record.id,jdbcType=BIGINT},
-      article_id = #{record.articleId,jdbcType=BIGINT},
+    set article_id = #{record.articleId,jdbcType=BIGINT},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
       update_time = #{record.updateTime,jdbcType=TIMESTAMP},
       content = #{record.content,jdbcType=LONGVARCHAR}
@@ -207,8 +196,7 @@
   </update>
   <update id="updateByExample" parameterType="map">
     update c_article_content
-    set id = #{record.id,jdbcType=BIGINT},
-      article_id = #{record.articleId,jdbcType=BIGINT},
+    set article_id = #{record.articleId,jdbcType=BIGINT},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
       update_time = #{record.updateTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
@@ -218,9 +206,6 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.crop.mapper.model.CArticleContent">
     update c_article_content
     <set>
-      <if test="articleId != null">
-        article_id = #{articleId,jdbcType=BIGINT},
-      </if>
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
@@ -231,21 +216,19 @@
         content = #{content,jdbcType=LONGVARCHAR},
       </if>
     </set>
-    where id = #{id,jdbcType=BIGINT}
+    where article_id = #{articleId,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.crop.mapper.model.CArticleContent">
     update c_article_content
-    set article_id = #{articleId,jdbcType=BIGINT},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
+    set create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
       content = #{content,jdbcType=LONGVARCHAR}
-    where id = #{id,jdbcType=BIGINT}
+    where article_id = #{articleId,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.crop.mapper.model.CArticleContent">
     update c_article_content
-    set article_id = #{articleId,jdbcType=BIGINT},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
+    set create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=BIGINT}
+    where article_id = #{articleId,jdbcType=BIGINT}
   </update>
 </mapper>

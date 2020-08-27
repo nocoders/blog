@@ -5,8 +5,6 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class CArticleContent implements Serializable {
-    private Long id;
-
     @ApiModelProperty(value = "文章id")
     private Long articleId;
 
@@ -20,14 +18,6 @@ public class CArticleContent implements Serializable {
     private String content;
 
     private static final long serialVersionUID = 1L;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public Long getArticleId() {
         return articleId;
@@ -67,7 +57,6 @@ public class CArticleContent implements Serializable {
         sb.append(getClass().getSimpleName());
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
         sb.append(", articleId=").append(articleId);
         sb.append(", createTime=").append(createTime);
         sb.append(", updateTime=").append(updateTime);

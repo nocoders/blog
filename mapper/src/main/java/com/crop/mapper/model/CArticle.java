@@ -32,6 +32,9 @@ public class CArticle implements Serializable {
     @ApiModelProperty(value = "点赞数量")
     private Integer likes;
 
+    @ApiModelProperty(value = "收藏量")
+    private Integer collections;
+
     private Date createTime;
 
     private Date updateTime;
@@ -110,6 +113,14 @@ public class CArticle implements Serializable {
         this.likes = likes;
     }
 
+    public Integer getCollections() {
+        return collections;
+    }
+
+    public void setCollections(Integer collections) {
+        this.collections = collections;
+    }
+
     public Date getCreateTime() {
         return createTime;
     }
@@ -141,6 +152,7 @@ public class CArticle implements Serializable {
         sb.append(", views=").append(views);
         sb.append(", comments=").append(comments);
         sb.append(", likes=").append(likes);
+        sb.append(", collections=").append(collections);
         sb.append(", createTime=").append(createTime);
         sb.append(", updateTime=").append(updateTime);
         sb.append(", serialVersionUID=").append(serialVersionUID);
