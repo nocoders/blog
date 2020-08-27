@@ -76,12 +76,4 @@ public class CArticleContent implements Serializable {
         sb.append("]");
         return sb.toString();
     }
-
-    public CArticleContent() {
-    }
-
-    public CArticleContent(Long articleId, String content) {
-        this.articleId = articleId;
-        this.content = content;
-    }
 }

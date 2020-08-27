@@ -18,10 +18,10 @@ public class CArticle implements Serializable {
     private String description;
 
     @ApiModelProperty(value = "是否原创，1-原创，0-转载")
-    private Boolean isOriginal;
+    private Byte isOriginal;
 
     @ApiModelProperty(value = "状态，1-草稿，0-发布")
-    private Boolean status;
+    private Byte status;
 
     @ApiModelProperty(value = "浏览量")
     private Integer views;
@@ -70,19 +70,19 @@ public class CArticle implements Serializable {
         this.description = description;
     }
 
-    public Boolean getIsOriginal() {
+    public Byte getIsOriginal() {
         return isOriginal;
     }
 
-    public void setIsOriginal(Boolean isOriginal) {
+    public void setIsOriginal(Byte isOriginal) {
         this.isOriginal = isOriginal;
     }
 
-    public Boolean getStatus() {
+    public Byte getStatus() {
         return status;
     }
 
-    public void setStatus(Boolean status) {
+    public void setStatus(Byte status) {
         this.status = status;
     }
 

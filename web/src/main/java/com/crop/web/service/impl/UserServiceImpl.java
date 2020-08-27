@@ -62,13 +62,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public String login(String userName, String password) {
         CUserExample userExample = new CUserExample();
-        userExample.createCriteria().andUserNameEqualTo(userName).andStatusEqualTo(true);
+        userExample.createCriteria().andUserNameEqualTo(userName).andStatusEqualTo((byte) 1);
         List<CUser> cUsers = userDao.selectByExample(userExample);
         if (CollectionUtils.isEmpty(cUsers)){
             Asserts.fail("用户名不正确");
         }
         CUser cUser = cUsers.get(0);
-        if (!cUser.getStatus()){
+        if (cUser.getStatus()==0){
             Asserts.fail("该用户已经被禁用");
         }
         if (!passwordEncoder.matches(password,cUser.getPassword())){

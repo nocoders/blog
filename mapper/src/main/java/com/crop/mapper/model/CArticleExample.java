@@ -375,52 +375,52 @@ public class CArticleExample {
             return (Criteria) this;
         }
 
-        public Criteria andIsOriginalEqualTo(Boolean value) {
+        public Criteria andIsOriginalEqualTo(Byte value) {
             addCriterion("is_original =", value, "isOriginal");
             return (Criteria) this;
         }
 
-        public Criteria andIsOriginalNotEqualTo(Boolean value) {
+        public Criteria andIsOriginalNotEqualTo(Byte value) {
             addCriterion("is_original <>", value, "isOriginal");
             return (Criteria) this;
         }
 
-        public Criteria andIsOriginalGreaterThan(Boolean value) {
+        public Criteria andIsOriginalGreaterThan(Byte value) {
             addCriterion("is_original >", value, "isOriginal");
             return (Criteria) this;
         }
 
-        public Criteria andIsOriginalGreaterThanOrEqualTo(Boolean value) {
+        public Criteria andIsOriginalGreaterThanOrEqualTo(Byte value) {
             addCriterion("is_original >=", value, "isOriginal");
             return (Criteria) this;
         }
 
-        public Criteria andIsOriginalLessThan(Boolean value) {
+        public Criteria andIsOriginalLessThan(Byte value) {
             addCriterion("is_original <", value, "isOriginal");
             return (Criteria) this;
         }
 
-        public Criteria andIsOriginalLessThanOrEqualTo(Boolean value) {
+        public Criteria andIsOriginalLessThanOrEqualTo(Byte value) {
             addCriterion("is_original <=", value, "isOriginal");
             return (Criteria) this;
         }
 
-        public Criteria andIsOriginalIn(List<Boolean> values) {
+        public Criteria andIsOriginalIn(List<Byte> values) {
             addCriterion("is_original in", values, "isOriginal");
             return (Criteria) this;
         }
 
-        public Criteria andIsOriginalNotIn(List<Boolean> values) {
+        public Criteria andIsOriginalNotIn(List<Byte> values) {
             addCriterion("is_original not in", values, "isOriginal");
             return (Criteria) this;
         }
 
-        public Criteria andIsOriginalBetween(Boolean value1, Boolean value2) {
+        public Criteria andIsOriginalBetween(Byte value1, Byte value2) {
             addCriterion("is_original between", value1, value2, "isOriginal");
             return (Criteria) this;
         }
 
-        public Criteria andIsOriginalNotBetween(Boolean value1, Boolean value2) {
+        public Criteria andIsOriginalNotBetween(Byte value1, Byte value2) {
             addCriterion("is_original not between", value1, value2, "isOriginal");
             return (Criteria) this;
         }
@@ -435,52 +435,52 @@ public class CArticleExample {
             return (Criteria) this;
         }
 
-        public Criteria andStatusEqualTo(Boolean value) {
+        public Criteria andStatusEqualTo(Byte value) {
             addCriterion("status =", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusNotEqualTo(Boolean value) {
+        public Criteria andStatusNotEqualTo(Byte value) {
             addCriterion("status <>", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusGreaterThan(Boolean value) {
+        public Criteria andStatusGreaterThan(Byte value) {
             addCriterion("status >", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusGreaterThanOrEqualTo(Boolean value) {
+        public Criteria andStatusGreaterThanOrEqualTo(Byte value) {
             addCriterion("status >=", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusLessThan(Boolean value) {
+        public Criteria andStatusLessThan(Byte value) {
             addCriterion("status <", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusLessThanOrEqualTo(Boolean value) {
+        public Criteria andStatusLessThanOrEqualTo(Byte value) {
             addCriterion("status <=", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusIn(List<Boolean> values) {
+        public Criteria andStatusIn(List<Byte> values) {
             addCriterion("status in", values, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusNotIn(List<Boolean> values) {
+        public Criteria andStatusNotIn(List<Byte> values) {
             addCriterion("status not in", values, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusBetween(Boolean value1, Boolean value2) {
+        public Criteria andStatusBetween(Byte value1, Byte value2) {
             addCriterion("status between", value1, value2, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusNotBetween(Boolean value1, Boolean value2) {
+        public Criteria andStatusNotBetween(Byte value1, Byte value2) {
             addCriterion("status not between", value1, value2, "status");
             return (Criteria) this;
         }

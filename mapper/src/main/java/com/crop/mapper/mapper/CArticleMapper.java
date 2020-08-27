@@ -1,5 +1,6 @@
 package com.crop.mapper.mapper;
 
+import com.crop.mapper.dto.ArticleBean;
 import com.crop.mapper.model.CArticle;
 import com.crop.mapper.model.CArticleExample;
 import java.util.List;

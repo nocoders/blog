@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.crop.mapper.dao.ArticleDao">
-    <resultMap id="ArticleDetailResultMap" type="com.crop.mapper.dto.ArticleDetails" extends="com.crop.mapper.mapper.CArticleMapper.BaseResultMap">
+    <resultMap id="ArticleDetailResultMap" type="com.crop.mapper.dto.ArticleBean" extends="com.crop.mapper.mapper.CArticleMapper.BaseResultMap">
     </resultMap>
 
     <select id="getArticleDetailById" resultMap="ArticleDetailResultMap">

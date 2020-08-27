@@ -32,7 +32,7 @@ public class CUser implements Serializable {
     private Date updateTime;
 
     @ApiModelProperty(value = "状态：1-启用，0-禁用")
-    private Boolean status;
+    private Byte status;
 
     private static final long serialVersionUID = 1L;
 
@@ -108,11 +108,11 @@ public class CUser implements Serializable {
         this.updateTime = updateTime;
     }
 
-    public Boolean getStatus() {
+    public Byte getStatus() {
         return status;
     }
 
-    public void setStatus(Boolean status) {
+    public void setStatus(Byte status) {
         this.status = status;
     }
 

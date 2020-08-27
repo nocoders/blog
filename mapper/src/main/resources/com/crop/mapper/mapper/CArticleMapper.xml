@@ -6,8 +6,8 @@
     <result column="user_id" jdbcType="BIGINT" property="userId" />
     <result column="title" jdbcType="VARCHAR" property="title" />
     <result column="description" jdbcType="VARCHAR" property="description" />
-    <result column="is_original" jdbcType="BIT" property="isOriginal" />
-    <result column="status" jdbcType="BIT" property="status" />
+    <result column="is_original" jdbcType="TINYINT" property="isOriginal" />
+    <result column="status" jdbcType="TINYINT" property="status" />
     <result column="views" jdbcType="INTEGER" property="views" />
     <result column="comments" jdbcType="INTEGER" property="comments" />
     <result column="likes" jdbcType="INTEGER" property="likes" />
@@ -115,7 +115,7 @@
       comments, likes, create_time, 
       update_time)
     values (#{userId,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
-      #{isOriginal,jdbcType=BIT}, #{status,jdbcType=BIT}, #{views,jdbcType=INTEGER}, 
+      #{isOriginal,jdbcType=TINYINT}, #{status,jdbcType=TINYINT}, #{views,jdbcType=INTEGER}, 
       #{comments,jdbcType=INTEGER}, #{likes,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
       #{updateTime,jdbcType=TIMESTAMP})
   </insert>
@@ -167,10 +167,10 @@
         #{description,jdbcType=VARCHAR},
       </if>
       <if test="isOriginal != null">
-        #{isOriginal,jdbcType=BIT},
+        #{isOriginal,jdbcType=TINYINT},
       </if>
       <if test="status != null">
-        #{status,jdbcType=BIT},
+        #{status,jdbcType=TINYINT},
       </if>
       <if test="views != null">
         #{views,jdbcType=INTEGER},
@@ -211,10 +211,10 @@
         description = #{record.description,jdbcType=VARCHAR},
       </if>
       <if test="record.isOriginal != null">
-        is_original = #{record.isOriginal,jdbcType=BIT},
+        is_original = #{record.isOriginal,jdbcType=TINYINT},
       </if>
       <if test="record.status != null">
-        status = #{record.status,jdbcType=BIT},
+        status = #{record.status,jdbcType=TINYINT},
       </if>
       <if test="record.views != null">
         views = #{record.views,jdbcType=INTEGER},
@@ -242,8 +242,8 @@
       user_id = #{record.userId,jdbcType=BIGINT},
       title = #{record.title,jdbcType=VARCHAR},
       description = #{record.description,jdbcType=VARCHAR},
-      is_original = #{record.isOriginal,jdbcType=BIT},
-      status = #{record.status,jdbcType=BIT},
+      is_original = #{record.isOriginal,jdbcType=TINYINT},
+      status = #{record.status,jdbcType=TINYINT},
       views = #{record.views,jdbcType=INTEGER},
       comments = #{record.comments,jdbcType=INTEGER},
       likes = #{record.likes,jdbcType=INTEGER},
@@ -266,10 +266,10 @@
         description = #{description,jdbcType=VARCHAR},
       </if>
       <if test="isOriginal != null">
-        is_original = #{isOriginal,jdbcType=BIT},
+        is_original = #{isOriginal,jdbcType=TINYINT},
       </if>
       <if test="status != null">
-        status = #{status,jdbcType=BIT},
+        status = #{status,jdbcType=TINYINT},
       </if>
       <if test="views != null">
         views = #{views,jdbcType=INTEGER},
@@ -294,8 +294,8 @@
     set user_id = #{userId,jdbcType=BIGINT},
       title = #{title,jdbcType=VARCHAR},
       description = #{description,jdbcType=VARCHAR},
-      is_original = #{isOriginal,jdbcType=BIT},
-      status = #{status,jdbcType=BIT},
+      is_original = #{isOriginal,jdbcType=TINYINT},
+      status = #{status,jdbcType=TINYINT},
       views = #{views,jdbcType=INTEGER},
       comments = #{comments,jdbcType=INTEGER},
       likes = #{likes,jdbcType=INTEGER},
