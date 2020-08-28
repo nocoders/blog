@@ -60,3 +60,37 @@ create table c_article_content
     update_time          timestamp default CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP comment '修改时间',
     primary key (id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='文章内容表';
+
+-- drop table if exists c_article_comments;
+/*==============================================================*/
+/* Table: c_article_comments 文章评论表                                     */
+/*==============================================================*/
+create table c_article_comments
+(
+    id                   bigint(20) not null auto_increment,
+    article_id           bigint(20) not null comment '文章id',
+    article_type         varchar(10) not null comment '文章类型',
+    content              varchar(1000) not null comment '评论内容',
+    from_uid             bigint(20) not null comment '评论用户id',
+    create_time          timestamp default CURRENT_TIMESTAMP,
+    update_time          timestamp default CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    primary key (id)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='文章评论表';
+
+drop table if exists c_article_comment_reply;
+
+/*==============================================================*/
+/* Table: c_article_comment_reply                               */
+/*==============================================================*/
+create table c_article_comment_reply
+(
+    id                   bigint(20) not null auto_increment,
+    comment_id           bigint(20) not null comment '根评论id',
+    reply_id             bigint(20) not null comment '回复id，针对该评论回复的上一条评论或回复',
+    reply_type           tinyint(1) not null comment '回复类型，0：针对评论回复，1：针对回复回复',
+    from_uid             bigint(20) not null comment '回复用户id',
+    to_uid               bigint(20) not null comment '目标用户id',
+    create_time          timestamp default CURRENT_TIMESTAMP,
+    update_time          timestamp default CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    primary key (id)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='文章评论回复表';
