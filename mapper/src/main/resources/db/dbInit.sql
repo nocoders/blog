@@ -1,6 +1,6 @@
 drop database if exists blog;
 
-create database blog default charset utf8 collate utf8_general_ci;
+create database blog default charset utf8mb4 collate utf8_general_ci;
 
 use blog;
 
@@ -94,3 +94,37 @@ create table c_article_comment_reply
     update_time          timestamp default CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     primary key (id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='文章评论回复表';
+
+-- drop table if exists c_article_likes;
+
+/*==============================================================*/
+/* Table: c_article_likes                                       */
+/*==============================================================*/
+create table c_article_likes
+(
+    id                   bigint(20) not null auto_increment,
+    article_id           bigint(20) not null comment '文章id',
+    user_id              bigint(20) not null comment '点赞用户id',
+    username             varchar(32) not null comment '点赞用户名名称称',
+    status               tinyint(1) not null default 0 comment '点赞状态，0：点赞，1：取消点赞',
+    create_time          timestamp,
+    update_time          timestamp,
+    primary key (id)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='文章点赞表';
+
+-- drop table if exists c_article_collections;
+
+/*==============================================================*/
+/* Table: c_article_collections                                 */
+/*==============================================================*/
+create table c_article_collections
+(
+    id                   bigint(20) not null auto_increment,
+    article_id           bigint(20) not null comment '文章id',
+    article_url          varchar(128) not null comment '收藏文章url',
+    article_name         varchar(64) not null comment '文章名称',
+    user_id              bigint(20) not null comment '收藏用户id',
+    create_time          timestamp default CURRENT_TIMESTAMP,
+    update_time          timestamp default CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    primary key (id)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='文章收藏记录表';
