@@ -3,6 +3,8 @@ package com.crop.web.service;
 import com.crop.mapper.dto.UserParam;
 import com.crop.mapper.model.CUser;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  *
  * @author linmeng
@@ -13,4 +15,6 @@ public interface UserService {
     CUser register(UserParam userParam);
 
     String login(String userName, String password);
+
+    CUser getUserFromRequest(HttpServletRequest request);
 }

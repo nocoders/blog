@@ -3,7 +3,6 @@ package com.crop.web.controller;
 import com.alibaba.fastjson.JSON;
 import com.crop.common.api.CommonResult;
 import com.crop.common.api.FailMessage;
-import com.crop.common.api.ResultCode;
 import com.crop.mapper.dto.ArticleUpdateParam;
 import com.crop.mapper.dto.ArticleBean;
 import com.crop.mapper.dto.ArticlePageReq;
@@ -11,7 +10,7 @@ import com.crop.mapper.dto.PageBean;
 import com.crop.mapper.model.CArticle;
 import com.crop.mapper.model.CUser;
 import com.crop.web.service.ArticleService;
-import com.crop.web.service.impl.WebServiceImpl;
+import com.crop.web.service.UserService;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -34,17 +33,17 @@ import javax.servlet.http.HttpServletRequest;
 public class ArticleController {
 
     @Autowired
-    private WebServiceImpl webService;
+    private ArticleService articleService;
 
     @Autowired
-    private ArticleService articleService;
+    private UserService userService;
 
     @PostMapping({"/add"})
     @ApiOperation("文章添加")
     public CommonResult<CArticle> add(@RequestBody @Validated ArticleUpdateParam param, HttpServletRequest request) {
 
         // 获取用户信息
-        CUser user = webService.getUserFromRequest(request);
+        CUser user = userService.getUserFromRequest(request);
         if (user == null){
             return CommonResult.unauthorized(null);
         }
@@ -67,7 +66,7 @@ public class ArticleController {
     public CommonResult<PageInfo<CArticle>> pageList(@RequestBody @Validated PageBean<ArticlePageReq> pageBean, HttpServletRequest request){
         log.info("前端传递文章分页参数："+ JSON.toJSONString(pageBean));
         // 获取用户信息
-        CUser user = webService.getUserFromRequest(request);
+        CUser user = userService.getUserFromRequest(request);
         if (user == null){
             return CommonResult.unauthorized(null);
         }

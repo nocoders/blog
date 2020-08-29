@@ -8,12 +8,15 @@ import com.crop.mapper.model.CUserExample;
 import com.crop.security.util.JwtTokenUtil;
 import com.crop.mapper.dto.CUserDetails;
 import com.crop.web.service.UserService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -32,6 +35,14 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
+
+    @Value("${jwt.tokenHeader}")
+    private String tokenHeader;
+    @Value("${jwt.tokenHead}")
+    private String tokenHead;
+
+    @Autowired
+    private JwtTokenUtil tokenUtil;
 
     @Override
     public CUser register(UserParam userParam) {
@@ -77,5 +88,25 @@ public class UserServiceImpl implements UserService {
         // token生成
 
         return jwtTokenUtil.generatorToken(new CUserDetails(cUser));
+    }
+
+    /**
+     * 从request里面拿到token，从token中拿到username，根据username去数据库查询用户信息
+     * @param request 前端请求
+     * @author linmeng
+     * @date 25/8/2020 上午11:29
+     * @return com.crop.mapper.model.CUser
+     */
+    @Override
+    public CUser getUserFromRequest(HttpServletRequest request){
+        String header = request.getHeader(this.tokenHeader);
+        if (StringUtils.isNotBlank(header) && header.startsWith(this.tokenHead)){
+            String username = tokenUtil.getUserNameFromToken(header.substring(this.tokenHead.length()));
+            if (StringUtils.isNotBlank(username)){
+                return userDao.getUserByUserName(username);
+            }
+        }
+
+        return null;
     }
 }

@@ -12,11 +12,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 
 /**
@@ -55,5 +53,12 @@ public class CUserController {
         tokenMap.put("tokenHead",tokenHead);
 
         return success(tokenMap);
+    }
+
+    @GetMapping("/info")
+    @ApiOperation("获取当前登录用户信息")
+    public CommonResult checkLogin(HttpServletRequest request){
+
+        return success(userService.getUserFromRequest(request));
     }
 }
