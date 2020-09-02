@@ -1,141 +1,57 @@
 package com.crop.mapper.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
 import java.util.Date;
+import lombok.Data;
+import org.hibernate.validator.constraints.Length;
 
+@ApiModel(value = "com.crop.mapper.model.CArticle",description="")
+@Data
 public class CArticle implements Serializable {
-    @ApiModelProperty(value = "主键id")
+    @ApiModelProperty(value="主键id",name="id")
     private Long id;
 
-    @ApiModelProperty(value = "用户id")
+    @ApiModelProperty(value="用户id",name="userId")
     private Long userId;
 
-    @ApiModelProperty(value = "文章标题")
+    @ApiModelProperty(value="文章标题",name="title")
+    @Length(max = 64, message = "文章标题名长度最长为64")
     private String title;
 
-    @ApiModelProperty(value = "文章描述")
+    @ApiModelProperty(value="文章描述",name="description")
+    @Length(max = 128, message = "文章描述名长度最长为128")
     private String description;
 
-    @ApiModelProperty(value = "是否原创，1-原创，0-转载")
-    private Byte isOriginal;
+    @ApiModelProperty(value="是否原创，1-原创，0-转载",name="isOriginal")
+    private Integer isOriginal;
 
-    @ApiModelProperty(value = "状态，1-草稿，0-发布")
-    private Byte status;
+    @ApiModelProperty(value="状态，1-草稿，0-发布",name="status")
+    private Integer status;
 
-    @ApiModelProperty(value = "浏览量")
+    @ApiModelProperty(value="浏览量",name="views")
     private Integer views;
 
-    @ApiModelProperty(value = "评论数量")
+    @ApiModelProperty(value="评论数量",name="comments")
     private Integer comments;
 
-    @ApiModelProperty(value = "点赞数量")
+    @ApiModelProperty(value="点赞数量",name="likes")
     private Integer likes;
 
-    @ApiModelProperty(value = "收藏量")
+    @ApiModelProperty(value="收藏量",name="collections")
     private Integer collections;
 
+    @ApiModelProperty(value="",name="createTime")
+    @JsonFormat(pattern = "yyyy-MM-dd",timezone="GMT+8")
     private Date createTime;
 
+    @ApiModelProperty(value="",name="updateTime")
+    @JsonFormat(pattern = "yyyy-MM-dd",timezone="GMT+8")
     private Date updateTime;
 
     private static final long serialVersionUID = 1L;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Byte getIsOriginal() {
-        return isOriginal;
-    }
-
-    public void setIsOriginal(Byte isOriginal) {
-        this.isOriginal = isOriginal;
-    }
-
-    public Byte getStatus() {
-        return status;
-    }
-
-    public void setStatus(Byte status) {
-        this.status = status;
-    }
-
-    public Integer getViews() {
-        return views;
-    }
-
-    public void setViews(Integer views) {
-        this.views = views;
-    }
-
-    public Integer getComments() {
-        return comments;
-    }
-
-    public void setComments(Integer comments) {
-        this.comments = comments;
-    }
-
-    public Integer getLikes() {
-        return likes;
-    }
-
-    public void setLikes(Integer likes) {
-        this.likes = likes;
-    }
-
-    public Integer getCollections() {
-        return collections;
-    }
-
-    public void setCollections(Integer collections) {
-        this.collections = collections;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
 
     @Override
     public String toString() {

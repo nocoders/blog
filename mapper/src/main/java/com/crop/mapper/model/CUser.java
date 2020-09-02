@@ -1,120 +1,55 @@
 package com.crop.mapper.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
 import java.util.Date;
+import lombok.Data;
+import org.hibernate.validator.constraints.Length;
 
+@ApiModel(value = "com.crop.mapper.model.CUser",description="")
+@Data
 public class CUser implements Serializable {
+    @ApiModelProperty(value="",name="id")
     private Long id;
 
-    @ApiModelProperty(value = "用户名称")
+    @ApiModelProperty(value="用户名称",name="userName")
+    @Length(max = 32, message = "用户名称名长度最长为32")
     private String userName;
 
-    @ApiModelProperty(value = "密码")
+    @ApiModelProperty(value="密码",name="password")
+    @Length(max = 64, message = "密码名长度最长为64")
     private String password;
 
-    @ApiModelProperty(value = "手机号码")
+    @ApiModelProperty(value="手机号码",name="telephone")
+    @Length(max = 11, message = "手机号码名长度最长为11")
     private String telephone;
 
-    @ApiModelProperty(value = "邮箱")
+    @ApiModelProperty(value="邮箱",name="email")
+    @Length(max = 32, message = "邮箱名长度最长为32")
     private String email;
 
-    @ApiModelProperty(value = "昵称")
+    @ApiModelProperty(value="昵称",name="nickName")
+    @Length(max = 64, message = "昵称名长度最长为64")
     private String nickName;
 
-    @ApiModelProperty(value = "头像url")
+    @ApiModelProperty(value="头像url",name="iconUrl")
+    @Length(max = 128, message = "头像url名长度最长为128")
     private String iconUrl;
 
-    @ApiModelProperty(value = "创建时间")
+    @ApiModelProperty(value="创建时间",name="createTime")
+    @JsonFormat(pattern = "yyyy-MM-dd",timezone="GMT+8")
     private Date createTime;
 
-    @ApiModelProperty(value = "修改时间")
+    @ApiModelProperty(value="修改时间",name="updateTime")
+    @JsonFormat(pattern = "yyyy-MM-dd",timezone="GMT+8")
     private Date updateTime;
 
-    @ApiModelProperty(value = "状态：1-启用，0-禁用")
-    private Byte status;
+    @ApiModelProperty(value="状态：1-启用，0-禁用",name="status")
+    private Integer status;
 
     private static final long serialVersionUID = 1L;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getTelephone() {
-        return telephone;
-    }
-
-    public void setTelephone(String telephone) {
-        this.telephone = telephone;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getNickName() {
-        return nickName;
-    }
-
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
-    }
-
-    public String getIconUrl() {
-        return iconUrl;
-    }
-
-    public void setIconUrl(String iconUrl) {
-        this.iconUrl = iconUrl;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    public Byte getStatus() {
-        return status;
-    }
-
-    public void setStatus(Byte status) {
-        this.status = status;
-    }
 
     @Override
     public String toString() {

@@ -1,85 +1,42 @@
 package com.crop.mapper.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
 import java.util.Date;
+import lombok.Data;
+import org.hibernate.validator.constraints.Length;
 
+@ApiModel(value = "com.crop.mapper.model.CArticleCollections",description="")
+@Data
 public class CArticleCollections implements Serializable {
+    @ApiModelProperty(value="",name="id")
     private Long id;
 
-    @ApiModelProperty(value = "文章id")
+    @ApiModelProperty(value="文章id",name="articleId")
     private Long articleId;
 
-    @ApiModelProperty(value = "收藏文章url")
+    @ApiModelProperty(value="收藏文章url",name="articleUrl")
+    @Length(max = 128, message = "收藏文章url名长度最长为128")
     private String articleUrl;
 
-    @ApiModelProperty(value = "文章名称")
+    @ApiModelProperty(value="文章名称",name="articleName")
+    @Length(max = 64, message = "文章名称名长度最长为64")
     private String articleName;
 
-    @ApiModelProperty(value = "收藏用户id")
+    @ApiModelProperty(value="收藏用户id",name="userId")
     private Long userId;
 
+    @ApiModelProperty(value="",name="createTime")
+    @JsonFormat(pattern = "yyyy-MM-dd",timezone="GMT+8")
     private Date createTime;
 
+    @ApiModelProperty(value="",name="updateTime")
+    @JsonFormat(pattern = "yyyy-MM-dd",timezone="GMT+8")
     private Date updateTime;
 
     private static final long serialVersionUID = 1L;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getArticleId() {
-        return articleId;
-    }
-
-    public void setArticleId(Long articleId) {
-        this.articleId = articleId;
-    }
-
-    public String getArticleUrl() {
-        return articleUrl;
-    }
-
-    public void setArticleUrl(String articleUrl) {
-        this.articleUrl = articleUrl;
-    }
-
-    public String getArticleName() {
-        return articleName;
-    }
-
-    public void setArticleName(String articleName) {
-        this.articleName = articleName;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
 
     @Override
     public String toString() {

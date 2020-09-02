@@ -1,96 +1,42 @@
 package com.crop.mapper.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
 import java.util.Date;
+import lombok.Data;
 
+@ApiModel(value = "com.crop.mapper.model.CArticleCommentReply",description="")
+@Data
 public class CArticleCommentReply implements Serializable {
+    @ApiModelProperty(value="",name="id")
     private Long id;
 
-    @ApiModelProperty(value = "根评论id")
+    @ApiModelProperty(value="根评论id",name="commentId")
     private Long commentId;
 
-    @ApiModelProperty(value = "回复id，针对该评论回复的上一条评论或回复")
+    @ApiModelProperty(value="回复id，针对该评论回复的上一条评论或回复",name="replyId")
     private Long replyId;
 
-    @ApiModelProperty(value = "回复类型，0：针对评论回复，1：针对回复回复")
-    private Byte replyType;
+    @ApiModelProperty(value="回复类型，0：针对评论回复，1：针对回复回复",name="replyType")
+    private Integer replyType;
 
-    @ApiModelProperty(value = "回复用户id")
+    @ApiModelProperty(value="回复用户id",name="fromUid")
     private Long fromUid;
 
-    @ApiModelProperty(value = "目标用户id")
+    @ApiModelProperty(value="目标用户id",name="toUid")
     private Long toUid;
 
+    @ApiModelProperty(value="",name="createTime")
+    @JsonFormat(pattern = "yyyy-MM-dd",timezone="GMT+8")
     private Date createTime;
 
+    @ApiModelProperty(value="",name="updateTime")
+    @JsonFormat(pattern = "yyyy-MM-dd",timezone="GMT+8")
     private Date updateTime;
 
     private static final long serialVersionUID = 1L;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getCommentId() {
-        return commentId;
-    }
-
-    public void setCommentId(Long commentId) {
-        this.commentId = commentId;
-    }
-
-    public Long getReplyId() {
-        return replyId;
-    }
-
-    public void setReplyId(Long replyId) {
-        this.replyId = replyId;
-    }
-
-    public Byte getReplyType() {
-        return replyType;
-    }
-
-    public void setReplyType(Byte replyType) {
-        this.replyType = replyType;
-    }
-
-    public Long getFromUid() {
-        return fromUid;
-    }
-
-    public void setFromUid(Long fromUid) {
-        this.fromUid = fromUid;
-    }
-
-    public Long getToUid() {
-        return toUid;
-    }
-
-    public void setToUid(Long toUid) {
-        this.toUid = toUid;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
 
     @Override
     public String toString() {

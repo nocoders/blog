@@ -26,7 +26,7 @@ public class PageBean<T> {
     @NotNull(message = "分页页码必传")
     Integer pageNum;
 
-    @Min(value = 1,message = "每页数量最小为10")
+    @Min(value = 10,message = "每页数量最小为10")
     @NotNull(message = "每页数量必传")
     @ApiModelProperty(value = "每页数量最小为10",required = true)
     Integer pageSize;

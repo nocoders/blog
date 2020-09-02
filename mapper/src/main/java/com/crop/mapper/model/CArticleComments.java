@@ -1,85 +1,42 @@
 package com.crop.mapper.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
 import java.util.Date;
+import lombok.Data;
+import org.hibernate.validator.constraints.Length;
 
+@ApiModel(value = "com.crop.mapper.model.CArticleComments",description="")
+@Data
 public class CArticleComments implements Serializable {
+    @ApiModelProperty(value="",name="id")
     private Long id;
 
-    @ApiModelProperty(value = "文章id")
+    @ApiModelProperty(value="文章id",name="articleId")
     private Long articleId;
 
-    @ApiModelProperty(value = "文章类型")
+    @ApiModelProperty(value="文章类型",name="articleType")
+    @Length(max = 10, message = "文章类型名长度最长为10")
     private String articleType;
 
-    @ApiModelProperty(value = "评论内容")
+    @ApiModelProperty(value="评论内容",name="content")
+    @Length(max = 1000, message = "评论内容名长度最长为1000")
     private String content;
 
-    @ApiModelProperty(value = "评论用户id")
+    @ApiModelProperty(value="评论用户id",name="fromUid")
     private Long fromUid;
 
+    @ApiModelProperty(value="",name="createTime")
+    @JsonFormat(pattern = "yyyy-MM-dd",timezone="GMT+8")
     private Date createTime;
 
+    @ApiModelProperty(value="",name="updateTime")
+    @JsonFormat(pattern = "yyyy-MM-dd",timezone="GMT+8")
     private Date updateTime;
 
     private static final long serialVersionUID = 1L;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getArticleId() {
-        return articleId;
-    }
-
-    public void setArticleId(Long articleId) {
-        this.articleId = articleId;
-    }
-
-    public String getArticleType() {
-        return articleType;
-    }
-
-    public void setArticleType(String articleType) {
-        this.articleType = articleType;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public Long getFromUid() {
-        return fromUid;
-    }
-
-    public void setFromUid(Long fromUid) {
-        this.fromUid = fromUid;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
 
     @Override
     public String toString() {
