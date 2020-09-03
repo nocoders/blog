@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 public class LikeServiceImpl implements LikeService {
 
     /**
-     * 用户点赞 信息
+     * 用户点赞,
      * @param param
      * @author linmeng
      * @date 2/9/2020 下午3:04
@@ -23,6 +23,8 @@ public class LikeServiceImpl implements LikeService {
      */
     @Override
     public CArticleLikes like(LikeParam param) {
+
+
         return null;
     }
 }

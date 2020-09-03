@@ -3,6 +3,6 @@
 <mapper namespace="com.crop.mapper.dao.UserDao">
 
     <select id="getUserByUserName" resultMap="com.crop.mapper.mapper.CUserMapper.BaseResultMap">
-        select * from c_user where user_name = #{username} limit 1;
+        select * from c_user where user_name = #{username} and status = 1 limit 1;
     </select>
 </mapper>

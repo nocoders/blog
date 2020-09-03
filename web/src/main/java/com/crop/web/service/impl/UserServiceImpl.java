@@ -12,6 +12,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -105,6 +106,24 @@ public class UserServiceImpl implements UserService {
             if (StringUtils.isNotBlank(username)){
                 return userDao.getUserByUserName(username);
             }
+        }
+
+        return null;
+    }
+
+    /**
+     * 根据用户名称去数据库获取用户信息
+     * @param username
+     * @author linmeng
+     * @date 3/9/2020 上午10:40
+     * @return org.springframework.security.core.userdetails.UserDetails
+     */
+    @Override
+    public UserDetails loadUserByUsername(String username) {
+
+        CUser user = userDao.getUserByUserName(username);
+        if (user != null){
+            return new CUserDetails(user);
         }
 
         return null;

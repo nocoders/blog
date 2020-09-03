@@ -1,5 +1,6 @@
 package com.crop.mapper.generator;
 
+import cn.hutool.core.date.DateUtil;
 import cn.hutool.extra.template.TemplateException;
 import freemarker.template.Template;
 import org.apache.commons.lang3.StringUtils;
@@ -9,6 +10,7 @@ import org.mybatis.generator.api.PluginAdapter;
 import org.mybatis.generator.api.dom.java.*;
 
 import java.io.*;
+import java.text.DateFormat;
 import java.util.*;
 
 /**
@@ -96,7 +98,7 @@ public class BasePlugin extends PluginAdapter {
         }
         // 追加日期格式化注解
         if (introspectedColumn.getJdbcTypeName() == "TIMESTAMP") {
-            field.addAnnotation(Annotation.JsonFormat.getAnnotation() + "(pattern = \"yyyy-MM-dd\",timezone=\"GMT+8\")");
+            field.addAnnotation(Annotation.JsonFormat.getAnnotation() + "(pattern = \"yyyy-MM-dd HH:mm:ss\",timezone=\"GMT+8\")");
             topLevelClass.addImportedType(new FullyQualifiedJavaType(Annotation.JsonFormat.getClazz()));
         }
         // tinyint数据（Byte）转换成（Integer）类型
@@ -284,7 +286,7 @@ public class BasePlugin extends PluginAdapter {
         topLevelClass.addJavaDocLine("*");
         topLevelClass.addJavaDocLine("* @author linmeng");
         topLevelClass.addJavaDocLine("* @version 1.0");
-        topLevelClass.addJavaDocLine("* @date " + new Date());
+        topLevelClass.addJavaDocLine("* @date " + DateUtil.format(new Date(), "yyyy-MM-dd HH:mm:ss"));
         topLevelClass.addJavaDocLine("*/");
     }
     /**
@@ -302,7 +304,7 @@ public class BasePlugin extends PluginAdapter {
         interfaze.addJavaDocLine("* " + interfaze.getType().getShortName());
         interfaze.addJavaDocLine("*");
         interfaze.addJavaDocLine("* @author linmeng");
-        interfaze.addJavaDocLine("* @date " + new Date());
+        interfaze.addJavaDocLine("* @date " + DateUtil.format(new Date(), "yyyy-MM-dd HH:mm:ss"));
         interfaze.addJavaDocLine("*/");
         // 生成注释结束
     }

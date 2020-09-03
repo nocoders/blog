@@ -44,11 +44,11 @@ public class CArticle implements Serializable {
     private Integer collections;
 
     @ApiModelProperty(value="",name="createTime")
-    @JsonFormat(pattern = "yyyy-MM-dd",timezone="GMT+8")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date createTime;
 
     @ApiModelProperty(value="",name="updateTime")
-    @JsonFormat(pattern = "yyyy-MM-dd",timezone="GMT+8")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date updateTime;
 
     private static final long serialVersionUID = 1L;

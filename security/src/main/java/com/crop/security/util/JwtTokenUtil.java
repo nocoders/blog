@@ -54,7 +54,7 @@ public class JwtTokenUtil {
     public String generatorToken(UserDetails userDetails){
         Map<String, Object> claims = new HashMap<>();
         claims.put(CLAIM_KEY_USERNAME, userDetails.getUsername());
-        claims.put(CLAIM_KEY_CREATED, new Date());
+        claims.put(CLAIM_KEY_CREATED, System.currentTimeMillis());
 
         return generatorToken(claims);
     }
@@ -86,6 +86,33 @@ public class JwtTokenUtil {
         return username;
     }
 
+    public boolean validateToken(String token,UserDetails userDetails){
+        String username = getUserNameFromToken(token);
+        return username.equals(userDetails.getUsername()) &&!isTokenExpired(token);
+    }
+    /**
+     * 校验token是否过期
+     * @param token
+     * @author linmeng
+     * @date 3/9/2020 上午11:15
+     * @return boolean
+     */
+    private boolean isTokenExpired(String token) {
+        Date expiredDate = getExpiredDateFromToken(token);
+        return expiredDate.before(new Date());
+    }
+
+    /**
+     * 获取token过期时间
+     * @param token
+     * @author linmeng
+     * @date 3/9/2020 上午11:16
+     * @return java.util.Date
+     */
+    private Date getExpiredDateFromToken(String token) {
+        Claims claims = getClaimsFromToken(token);
+        return claims.getExpiration();
+    }
     /**
      * 在token中获取负载
      * @param token

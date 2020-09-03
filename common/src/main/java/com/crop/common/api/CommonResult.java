@@ -51,6 +51,13 @@ public class CommonResult<T> {
         return new CommonResult(ResultCode.UNAUTHORIZED.getCode(), ResultCode.UNAUTHORIZED.getMessage(), data);
     }
 
+    /**
+     * 无权限返回
+     * @param data
+     * @author linmeng
+     * @date 3/9/2020 上午10:02
+     * @return com.crop.common.api.CommonResult<T>
+     */
     public static <T> CommonResult<T> forbidden(T data) {
         return new CommonResult(ResultCode.FORBIDDEN.getCode(), ResultCode.FORBIDDEN.getMessage(), data);
     }

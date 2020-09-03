@@ -2,6 +2,7 @@ package com.crop.web.service;
 
 import com.crop.mapper.dto.UserParam;
 import com.crop.mapper.model.CUser;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -17,4 +18,6 @@ public interface UserService {
     String login(String userName, String password);
 
     CUser getUserFromRequest(HttpServletRequest request);
+
+    UserDetails loadUserByUsername(String username);
 }

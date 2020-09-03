@@ -1,5 +1,8 @@
 package com.crop.security.config;
 
+import com.crop.security.component.JwtAuthenticationTokenFilter;
+import com.crop.security.component.RestAuthenticationEntryPoint;
+import com.crop.security.component.RestfulAccessDeniedHandler;
 import com.crop.security.util.JwtTokenUtil;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
@@ -9,6 +12,7 @@ import org.springframework.security.config.annotation.web.configurers.Expression
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import java.util.Iterator;
 
@@ -32,13 +36,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         registry.antMatchers(HttpMethod.OPTIONS)
                 .permitAll();
         // 任何请求需要身份认证
-        registry
+        registry.and()
+                .authorizeRequests()
+                .anyRequest()
+                .authenticated()
                 // 关闭跨站请求防护及不使用session
                 .and()
                 .csrf()
                 .disable()
                 .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                // 自定义权限拒绝处理类
+                .and()
+                .exceptionHandling()
+                .accessDeniedHandler(restfulAccessDeniedHandler())
+                .authenticationEntryPoint(restAuthenticationEntryPoint())
+                .and()
+                .addFilterBefore(jwtAuthenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class)
+        ;
     }
 
     @Bean
@@ -46,6 +61,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new IgnoreUrlsConfig();
     }
 
+    @Bean
+    public JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter(){
+        return new JwtAuthenticationTokenFilter();
+    }
+
+    @Bean
+    public RestfulAccessDeniedHandler restfulAccessDeniedHandler(){
+        return new RestfulAccessDeniedHandler();
+    }
+
+    @Bean
+    public RestAuthenticationEntryPoint restAuthenticationEntryPoint(){
+        return new RestAuthenticationEntryPoint();
+    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
