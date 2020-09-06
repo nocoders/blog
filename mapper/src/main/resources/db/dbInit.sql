@@ -41,6 +41,7 @@ create table c_article
     comments             int(10) default 0 comment '评论数量',
     likes                int(10) default 0 comment '点赞数量',
     `collections`        int(10) DEFAULT 0 COMMENT '收藏量',
+    deleted              tinyint(1) default 0 comment '是否删除，0-未删除，1-已删除',
     create_time          timestamp default CURRENT_TIMESTAMP,
     update_time          timestamp default CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     primary key (id)

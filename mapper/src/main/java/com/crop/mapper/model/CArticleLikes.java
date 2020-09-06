@@ -24,7 +24,7 @@ public class CArticleLikes implements Serializable {
     @Length(max = 32, message = "点赞用户名名称称名长度最长为32")
     private String username;
 
-    @ApiModelProperty(value="点赞状态，0：点赞，1：取消点赞",name="status")
+    @ApiModelProperty(value="点赞状态，1：点赞，0：点赞后又取消",name="status")
     private Integer status;
 
     @ApiModelProperty(value="",name="createTime")

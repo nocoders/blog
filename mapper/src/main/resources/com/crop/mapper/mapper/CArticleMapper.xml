@@ -12,6 +12,7 @@
     <result column="comments" jdbcType="INTEGER" property="comments" />
     <result column="likes" jdbcType="INTEGER" property="likes" />
     <result column="collections" jdbcType="INTEGER" property="collections" />
+    <result column="deleted" jdbcType="TINYINT" property="deleted" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
@@ -75,7 +76,7 @@
   </sql>
   <sql id="Base_Column_List">
     id, user_id, title, description, is_original, status, views, comments, likes, collections, 
-    create_time, update_time
+    deleted, create_time, update_time
   </sql>
   <select id="selectByExample" parameterType="com.crop.mapper.model.CArticleExample" resultMap="BaseResultMap">
     select
@@ -114,11 +115,13 @@
     insert into c_article (user_id, title, description, 
       is_original, status, views, 
       comments, likes, collections, 
-      create_time, update_time)
+      deleted, create_time, update_time
+      )
     values (#{userId,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
       #{isOriginal,jdbcType=TINYINT}, #{status,jdbcType=TINYINT}, #{views,jdbcType=INTEGER}, 
       #{comments,jdbcType=INTEGER}, #{likes,jdbcType=INTEGER}, #{collections,jdbcType=INTEGER}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+      #{deleted,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.crop.mapper.model.CArticle">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
@@ -152,6 +155,9 @@
       </if>
       <if test="collections != null">
         collections,
+      </if>
+      <if test="deleted != null">
+        deleted,
       </if>
       <if test="createTime != null">
         create_time,
@@ -187,6 +193,9 @@
       </if>
       <if test="collections != null">
         #{collections,jdbcType=INTEGER},
+      </if>
+      <if test="deleted != null">
+        #{deleted,jdbcType=TINYINT},
       </if>
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
@@ -235,6 +244,9 @@
       <if test="record.collections != null">
         collections = #{record.collections,jdbcType=INTEGER},
       </if>
+      <if test="record.deleted != null">
+        deleted = #{record.deleted,jdbcType=TINYINT},
+      </if>
       <if test="record.createTime != null">
         create_time = #{record.createTime,jdbcType=TIMESTAMP},
       </if>
@@ -258,6 +270,7 @@
       comments = #{record.comments,jdbcType=INTEGER},
       likes = #{record.likes,jdbcType=INTEGER},
       collections = #{record.collections,jdbcType=INTEGER},
+      deleted = #{record.deleted,jdbcType=TINYINT},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
       update_time = #{record.updateTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
@@ -294,6 +307,9 @@
       <if test="collections != null">
         collections = #{collections,jdbcType=INTEGER},
       </if>
+      <if test="deleted != null">
+        deleted = #{deleted,jdbcType=TINYINT},
+      </if>
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
@@ -314,6 +330,7 @@
       comments = #{comments,jdbcType=INTEGER},
       likes = #{likes,jdbcType=INTEGER},
       collections = #{collections,jdbcType=INTEGER},
+      deleted = #{deleted,jdbcType=TINYINT},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}

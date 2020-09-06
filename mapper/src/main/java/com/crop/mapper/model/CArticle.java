@@ -43,6 +43,9 @@ public class CArticle implements Serializable {
     @ApiModelProperty(value="收藏量",name="collections")
     private Integer collections;
 
+    @ApiModelProperty(value="是否删除，0-未删除，1-已删除",name="deleted")
+    private Integer deleted;
+
     @ApiModelProperty(value="",name="createTime")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date createTime;
@@ -69,6 +72,7 @@ public class CArticle implements Serializable {
         sb.append(", comments=").append(comments);
         sb.append(", likes=").append(likes);
         sb.append(", collections=").append(collections);
+        sb.append(", deleted=").append(deleted);
         sb.append(", createTime=").append(createTime);
         sb.append(", updateTime=").append(updateTime);
         sb.append(", serialVersionUID=").append(serialVersionUID);
