@@ -13,7 +13,7 @@ import lombok.Data;
  */
 @Data
 @ApiModel(value = "文章详情",description = "文章详情")
-public class ArticleBean extends CArticle {
+public class ArticleDetail extends CArticle {
 
     @ApiModelProperty(value = "文章内容")
     private String content;

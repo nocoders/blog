@@ -112,6 +112,25 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
+     * 根据token获取用户信息
+     * @param token
+     * @author linmeng
+     * @date 6/9/2020 上午10:38
+     * @return com.crop.mapper.model.CUser
+     */
+    @Override
+    public CUser getUserFromToken(String token) {
+        if (StringUtils.isNotBlank(token) && token.startsWith(this.tokenHead)){
+            String username = tokenUtil.getUserNameFromToken(token.substring(this.tokenHead.length()));
+            if (StringUtils.isNotBlank(username)){
+                return userDao.getUserByUserName(username);
+            }
+        }
+
+        return null;
+    }
+
+    /**
      * 根据用户名称去数据库获取用户信息
      * @param username
      * @author linmeng

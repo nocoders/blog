@@ -1,6 +1,6 @@
 package com.crop.mapper.dao;
 
-import com.crop.mapper.dto.ArticleBean;
+import com.crop.mapper.dto.ArticleDetail;
 import com.crop.mapper.mapper.CArticleMapper;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -13,5 +13,5 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface ArticleDao extends CArticleMapper {
 
-    ArticleBean getArticleDetailById(Long id);
+    ArticleDetail getArticleDetailById(Long id);
 }

@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.crop.common.api.CommonResult;
 import com.crop.common.api.FailMessage;
 import com.crop.mapper.dto.ArticleUpdateParam;
-import com.crop.mapper.dto.ArticleBean;
+import com.crop.mapper.dto.ArticleDetail;
 import com.crop.mapper.dto.ArticlePageReq;
 import com.crop.mapper.dto.PageBean;
 import com.crop.mapper.model.CArticle;
@@ -53,10 +53,10 @@ public class ArticleController {
 
     @GetMapping({"/detail/{id}"})
     @ApiOperation("文章添加")
-    public CommonResult<ArticleBean> details(@PathVariable(value = "id") Long id){
+    public CommonResult<ArticleDetail> details(@PathVariable(value = "id") Long id){
         log.info("前端传递文章id为：{}",id);
 
-        ArticleBean details = articleService.getDetailById(id);
+        ArticleDetail details = articleService.getDetailById(id);
 
         return details ==null ? CommonResult.failed():CommonResult.success(details);
     }

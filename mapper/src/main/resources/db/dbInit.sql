@@ -106,9 +106,9 @@ create table c_article_likes
     article_id           bigint(20) not null comment '文章id',
     user_id              bigint(20) not null comment '点赞用户id',
     username             varchar(32) not null comment '点赞用户名名称称',
-    status               tinyint(1) not null default 0 comment '点赞状态，0：点赞，1：取消点赞',
-    create_time          timestamp,
-    update_time          timestamp,
+    status               tinyint(1) not null default 0 comment '点赞状态，1：点赞，0：点赞后又取消',
+    create_time           timestamp default CURRENT_TIMESTAMP,
+    update_time           timestamp default CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     primary key (id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='文章点赞表';
 

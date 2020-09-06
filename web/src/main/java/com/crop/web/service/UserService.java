@@ -19,5 +19,7 @@ public interface UserService {
 
     CUser getUserFromRequest(HttpServletRequest request);
 
+    CUser getUserFromToken(String token);
+
     UserDetails loadUserByUsername(String username);
 }

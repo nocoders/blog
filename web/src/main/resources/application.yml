@@ -36,3 +36,5 @@ redis:
     resourceList: 'web:resourceList'
   expire:
     common: 86400 # 24小时
+request:
+  id: requestId

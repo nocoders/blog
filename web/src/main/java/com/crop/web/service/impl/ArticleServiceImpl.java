@@ -3,7 +3,7 @@ package com.crop.web.service.impl;
 import cn.hutool.core.bean.BeanUtil;
 import com.crop.mapper.dao.ArticleDao;
 import com.crop.mapper.dto.ArticleUpdateParam;
-import com.crop.mapper.dto.ArticleBean;
+import com.crop.mapper.dto.ArticleDetail;
 import com.crop.mapper.dto.ArticlePageReq;
 import com.crop.mapper.dto.PageBean;
 import com.crop.mapper.mapper.CArticleContentMapper;
@@ -69,7 +69,7 @@ public class ArticleServiceImpl implements ArticleService {
      * @return com.crop.mapper.dto.ArticleDetails
      */
     @Override
-    public ArticleBean getDetailById(Long id) {
+    public ArticleDetail getDetailById(Long id) {
 
         return articleDao.getArticleDetailById(id);
     }
@@ -115,7 +115,7 @@ public class ArticleServiceImpl implements ArticleService {
     @Transactional(rollbackFor = Exception.class)
     public int update(ArticleUpdateParam param) {
         Long articleId = param.getId();
-        ArticleBean articleDetail = articleDao.getArticleDetailById(articleId);
+        ArticleDetail articleDetail = articleDao.getArticleDetailById(articleId);
         if (null != articleDetail && param.getUserId().equals(articleDetail.getUserId())
                 && StringUtils.isNotBlank(articleDetail.getContent())){
             CArticle cArticle = new CArticle();
