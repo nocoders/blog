@@ -122,6 +122,17 @@ public class RedisServiceImpl {
         return redisTemplate.opsForHash().entries(key);
     }
 
+    /**
+     * 根据key  获取hash的所有的值
+     * @param key
+     * @author linmeng
+     * @date 10/9/2020 下午2:30
+     * @return java.util.List<java.lang.Object>
+     */
+    public List<Object> hVals(String key){
+        return redisTemplate.opsForHash().values(key);
+    }
+
     public Boolean hSetAll(String key, Map<String, Object> map, long time) {
         redisTemplate.opsForHash().putAll(key, map);
         return expire(key, time);

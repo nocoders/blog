@@ -12,4 +12,5 @@ public class RedisConstant {
     public static final String ARTICLE_USER_LIKED = "ARTICLE_USER_LIKED:%s";
     /**  用户点赞锁  */
     public static final String ARTICLE_USER_LIKED_LOCK = "ARTICLE_USER_LIKED_LOCK:%s:%s";
+    public static final String ARTICLE_LIKED_LOCK = "ARTICLE_LIKED_LOCK:%s";
 }

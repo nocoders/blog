@@ -4,6 +4,8 @@ import com.crop.mapper.dto.ArticleDetail;
 import com.crop.mapper.mapper.CArticleMapper;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 /**
  *
  * @author linmeng
@@ -14,4 +16,6 @@ import org.apache.ibatis.annotations.Mapper;
 public interface ArticleDao extends CArticleMapper {
 
     ArticleDetail getArticleDetailById(Long id);
+
+    List<Long> getDistributeArticleIds();
 }

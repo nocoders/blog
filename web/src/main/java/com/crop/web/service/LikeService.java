@@ -12,5 +12,5 @@ import javax.servlet.http.HttpServletRequest;
  * @date 2/9/2020 下午2:47
  */
 public interface LikeService {
-    CArticleLikes like(LikeParam param, HttpServletRequest request);
+    boolean like(LikeParam param, HttpServletRequest request);
 }

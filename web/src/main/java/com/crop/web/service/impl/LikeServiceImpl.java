@@ -55,7 +55,7 @@ public class LikeServiceImpl implements LikeService {
      * @return com.crop.mapper.model.CArticleLikes
      */
     @Override
-    public CArticleLikes like(LikeParam param, HttpServletRequest request) {
+    public boolean like(LikeParam param, HttpServletRequest request) {
 
         String token = request.getHeader(tokenHeader);
         CUser user = userService.getUserFromToken(token);
@@ -68,8 +68,8 @@ public class LikeServiceImpl implements LikeService {
             throw new ApiException("文章未发布，不能点赞。");
         }
         // 从redis中根据文章id，用户id
-        String articleLikedKey = RedisKeyUtil.getArticleLikedKey(String.valueOf(param.getArticleId()));
-        String articleLikeLockKey = RedisKeyUtil.getArticleLikeLockKey(param.getArticleId(), user.getId());
+        String articleLikedKey = RedisKeyUtil.getArticleLikedKey(param.getArticleId());
+        String articleLikeLockKey = RedisKeyUtil.getArticleUserLikeLockKey(param.getArticleId(), user.getId());
         RedisLockEntity redisLockEntity = RedisLockEntity.builder().lockKey(articleLikeLockKey).token(token).build();
         if (redisService.lock(redisLockEntity)){
             Boolean likeExists = redisService.hHasKey(articleLikedKey, String.valueOf(user.getId()));
@@ -77,24 +77,22 @@ public class LikeServiceImpl implements LikeService {
                 Integer liked = (Integer) redisService.hGet(articleLikedKey, String.valueOf(user.getId()));
                 Integer afterLiked = liked + param.getType();
                 if (afterLiked < 0 || afterLiked > 1){
-                    boolean b = redisService.unlockLua(redisLockEntity);
+                    redisService.unlockLua(redisLockEntity);
                     throw new ApiException("点赞类型错误");
                 }
                 redisService.hSet(articleLikedKey,String.valueOf(user.getId()),afterLiked);
+                return true;
             }else {
                 if (param.getType() != 1){
-                    boolean b = redisService.unlockLua(redisLockEntity);
+                    redisService.unlockLua(redisLockEntity);
                     throw new ApiException("点赞类型错误");
                 }
                 redisService.hSet(articleLikedKey,String.valueOf(user.getId()),1);
             }
             redisService.unlockLua(redisLockEntity);
+            return true;
         }else {
-            return null;
+            return false;
         }
-
-
-
-        return null;
     }
 }

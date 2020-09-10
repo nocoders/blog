@@ -79,4 +79,15 @@ public class CArticle implements Serializable {
         sb.append("]");
         return sb.toString();
     }
+
+    public CArticle() {
+    }
+
+    public CArticle(Long id, Integer views, Integer comments, Integer likes, Integer collections) {
+        this.id = id;
+        this.views = views;
+        this.comments = comments;
+        this.likes = likes;
+        this.collections = collections;
+    }
 }

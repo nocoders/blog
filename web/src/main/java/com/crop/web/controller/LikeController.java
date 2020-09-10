@@ -36,11 +36,10 @@ public class LikeController {
 
     @PostMapping({"/like"})
     @ApiOperation("文章点赞")
-    public CommonResult<CArticleLikes> register(@RequestBody @Validated LikeParam param, HttpServletRequest request) {
+    public CommonResult register(@RequestBody @Validated LikeParam param, HttpServletRequest request) {
 
-        CArticleLikes like = likeService.like(param,request);
+        boolean likeResult = likeService.like(param,request);
 
-        return like == null ? CommonResult.failed() : CommonResult.success(like);
+        return likeResult  ? CommonResult.success() : CommonResult.failed();
     }
-
 }
