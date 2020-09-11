@@ -6,7 +6,7 @@ import com.crop.mapper.dto.UserParam;
 import com.crop.mapper.model.CUser;
 import com.crop.mapper.model.CUserExample;
 import com.crop.security.util.JwtTokenUtil;
-import com.crop.mapper.dto.CUserDetails;
+import com.crop.mapper.dto.UserDetail;
 import com.crop.web.service.UserService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -16,6 +16,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -88,7 +90,7 @@ public class UserServiceImpl implements UserService {
         }
         // token生成
 
-        return jwtTokenUtil.generatorToken(new CUserDetails(cUser));
+        return jwtTokenUtil.generatorToken(new UserDetail(cUser));
     }
 
     /**
@@ -99,7 +101,8 @@ public class UserServiceImpl implements UserService {
      * @return com.crop.mapper.model.CUser
      */
     @Override
-    public CUser getUserFromRequest(HttpServletRequest request){
+    public CUser getUserFromRequest(){
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         String header = request.getHeader(this.tokenHeader);
         if (StringUtils.isNotBlank(header) && header.startsWith(this.tokenHead)){
             String username = tokenUtil.getUserNameFromToken(header.substring(this.tokenHead.length()));
@@ -142,7 +145,7 @@ public class UserServiceImpl implements UserService {
 
         CUser user = userDao.getUserByUserName(username);
         if (user != null){
-            return new CUserDetails(user);
+            return new UserDetail(user);
         }
 
         return null;

@@ -42,4 +42,7 @@ public class LikeController {
 
         return likeResult  ? CommonResult.success() : CommonResult.failed();
     }
+
+
+
 }

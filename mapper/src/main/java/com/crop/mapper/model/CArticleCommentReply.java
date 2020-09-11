@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
 import java.util.Date;
 import lombok.Data;
+import org.hibernate.validator.constraints.Length;
 
 @ApiModel(value = "com.crop.mapper.model.CArticleCommentReply",description="")
 @Data
@@ -27,6 +28,10 @@ public class CArticleCommentReply implements Serializable {
 
     @ApiModelProperty(value="目标用户id",name="toUid")
     private Long toUid;
+
+    @ApiModelProperty(value="评论内容",name="content")
+    @Length(max = 1000, message = "评论内容名长度最长为1000")
+    private String content;
 
     @ApiModelProperty(value="",name="createTime")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
@@ -50,6 +55,7 @@ public class CArticleCommentReply implements Serializable {
         sb.append(", replyType=").append(replyType);
         sb.append(", fromUid=").append(fromUid);
         sb.append(", toUid=").append(toUid);
+        sb.append(", content=").append(content);
         sb.append(", createTime=").append(createTime);
         sb.append(", updateTime=").append(updateTime);
         sb.append(", serialVersionUID=").append(serialVersionUID);

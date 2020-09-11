@@ -17,10 +17,6 @@ public class CArticleComments implements Serializable {
     @ApiModelProperty(value="文章id",name="articleId")
     private Long articleId;
 
-    @ApiModelProperty(value="文章类型",name="articleType")
-    @Length(max = 10, message = "文章类型名长度最长为10")
-    private String articleType;
-
     @ApiModelProperty(value="评论内容",name="content")
     @Length(max = 1000, message = "评论内容名长度最长为1000")
     private String content;
@@ -46,7 +42,6 @@ public class CArticleComments implements Serializable {
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
         sb.append(", articleId=").append(articleId);
-        sb.append(", articleType=").append(articleType);
         sb.append(", content=").append(content);
         sb.append(", fromUid=").append(fromUid);
         sb.append(", createTime=").append(createTime);

@@ -57,8 +57,8 @@ public class CUserController {
 
     @GetMapping("/info")
     @ApiOperation("获取当前登录用户信息")
-    public CommonResult checkLogin(HttpServletRequest request){
+    public CommonResult checkLogin(){
 
-        return success(userService.getUserFromRequest(request));
+        return success(userService.getUserFromRequest());
     }
 }

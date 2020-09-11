@@ -4,7 +4,6 @@
   <resultMap id="BaseResultMap" type="com.crop.mapper.model.CArticleComments">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="article_id" jdbcType="BIGINT" property="articleId" />
-    <result column="article_type" jdbcType="VARCHAR" property="articleType" />
     <result column="content" jdbcType="VARCHAR" property="content" />
     <result column="from_uid" jdbcType="BIGINT" property="fromUid" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
@@ -69,7 +68,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, article_id, article_type, content, from_uid, create_time, update_time
+    id, article_id, content, from_uid, create_time, update_time
   </sql>
   <select id="selectByExample" parameterType="com.crop.mapper.model.CArticleCommentsExample" resultMap="BaseResultMap">
     select
@@ -105,12 +104,10 @@
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into c_article_comments (article_id, article_type, content, 
-      from_uid, create_time, update_time
-      )
-    values (#{articleId,jdbcType=BIGINT}, #{articleType,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, 
-      #{fromUid,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
-      )
+    insert into c_article_comments (article_id, content, from_uid, 
+      create_time, update_time)
+    values (#{articleId,jdbcType=BIGINT}, #{content,jdbcType=VARCHAR}, #{fromUid,jdbcType=BIGINT}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.crop.mapper.model.CArticleComments">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
@@ -120,9 +117,6 @@
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="articleId != null">
         article_id,
-      </if>
-      <if test="articleType != null">
-        article_type,
       </if>
       <if test="content != null">
         content,
@@ -140,9 +134,6 @@
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="articleId != null">
         #{articleId,jdbcType=BIGINT},
-      </if>
-      <if test="articleType != null">
-        #{articleType,jdbcType=VARCHAR},
       </if>
       <if test="content != null">
         #{content,jdbcType=VARCHAR},
@@ -173,9 +164,6 @@
       <if test="record.articleId != null">
         article_id = #{record.articleId,jdbcType=BIGINT},
       </if>
-      <if test="record.articleType != null">
-        article_type = #{record.articleType,jdbcType=VARCHAR},
-      </if>
       <if test="record.content != null">
         content = #{record.content,jdbcType=VARCHAR},
       </if>
@@ -197,7 +185,6 @@
     update c_article_comments
     set id = #{record.id,jdbcType=BIGINT},
       article_id = #{record.articleId,jdbcType=BIGINT},
-      article_type = #{record.articleType,jdbcType=VARCHAR},
       content = #{record.content,jdbcType=VARCHAR},
       from_uid = #{record.fromUid,jdbcType=BIGINT},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
@@ -211,9 +198,6 @@
     <set>
       <if test="articleId != null">
         article_id = #{articleId,jdbcType=BIGINT},
-      </if>
-      <if test="articleType != null">
-        article_type = #{articleType,jdbcType=VARCHAR},
       </if>
       <if test="content != null">
         content = #{content,jdbcType=VARCHAR},
@@ -233,7 +217,6 @@
   <update id="updateByPrimaryKey" parameterType="com.crop.mapper.model.CArticleComments">
     update c_article_comments
     set article_id = #{articleId,jdbcType=BIGINT},
-      article_type = #{articleType,jdbcType=VARCHAR},
       content = #{content,jdbcType=VARCHAR},
       from_uid = #{fromUid,jdbcType=BIGINT},
       create_time = #{createTime,jdbcType=TIMESTAMP},

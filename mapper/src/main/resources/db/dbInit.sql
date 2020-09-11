@@ -70,7 +70,6 @@ create table c_article_comments
 (
     id                   bigint(20) not null auto_increment,
     article_id           bigint(20) not null comment '文章id',
-    article_type         varchar(10) not null comment '文章类型',
     content              varchar(1000) not null comment '评论内容',
     from_uid             bigint(20) not null comment '评论用户id',
     create_time          timestamp default CURRENT_TIMESTAMP,
@@ -91,6 +90,7 @@ create table c_article_comment_reply
     reply_type           tinyint(1) not null comment '回复类型，0：针对评论回复，1：针对回复回复',
     from_uid             bigint(20) not null comment '回复用户id',
     to_uid               bigint(20) not null comment '目标用户id',
+    `content`            varchar(1000) NOT NULL COMMENT '回复内容',
     create_time          timestamp default CURRENT_TIMESTAMP,
     update_time          timestamp default CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     primary key (id)

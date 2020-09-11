@@ -12,7 +12,7 @@ import lombok.Data;
  * @date 25/8/2020 下午3:41
  */
 @Data
-@ApiModel(value = "文章详情",description = "文章详情")
+@ApiModel(value = "文章详情")
 public class ArticleDetail extends CArticle {
 
     @ApiModelProperty(value = "文章内容")

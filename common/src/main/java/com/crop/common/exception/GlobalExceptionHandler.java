@@ -1,6 +1,7 @@
 package com.crop.common.exception;
 
 import com.crop.common.api.CommonResult;
+import com.crop.common.api.ResultCode;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -18,6 +19,13 @@ public class GlobalExceptionHandler {
         if (e.getErrorCode() != null) {
             return CommonResult.failed(e.getErrorCode());
         }
+        return CommonResult.failed(e.getMessage());
+    }
+
+    @ResponseBody
+    @ExceptionHandler(value = RuntimeException.class)
+    public CommonResult handleException(Exception e) {
+
         return CommonResult.failed(e.getMessage());
     }
 }

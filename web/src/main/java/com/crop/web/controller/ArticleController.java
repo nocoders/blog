@@ -38,12 +38,12 @@ public class ArticleController {
     @Autowired
     private UserService userService;
 
-    @PostMapping({"/add"})
+    @PostMapping
     @ApiOperation("文章添加")
-    public CommonResult<CArticle> add(@RequestBody @Validated ArticleUpdateParam param, HttpServletRequest request) {
+    public CommonResult<CArticle> add(@RequestBody @Validated ArticleUpdateParam param) {
 
         // 获取用户信息
-        CUser user = userService.getUserFromRequest(request);
+        CUser user = userService.getUserFromRequest();
         if (user == null){
             return CommonResult.unauthorized(null);
         }
@@ -51,8 +51,8 @@ public class ArticleController {
         return article == null ? CommonResult.failed(FailMessage.DUPLICATE_USERNAME.getMessage()) : CommonResult.success(article);
     }
 
-    @GetMapping({"/detail/{id}"})
-    @ApiOperation("文章添加")
+    @GetMapping({"/{id}"})
+    @ApiOperation("文章详情")
     public CommonResult<ArticleDetail> details(@PathVariable(value = "id") Long id){
         log.info("前端传递文章id为：{}",id);
 
@@ -63,10 +63,10 @@ public class ArticleController {
 
     @PostMapping({"/page"})
     @ApiOperation("文章分页")
-    public CommonResult<PageInfo<CArticle>> pageList(@RequestBody @Validated PageBean<ArticlePageReq> pageBean, HttpServletRequest request){
+    public CommonResult<PageInfo<CArticle>> pageList(@RequestBody @Validated PageBean<ArticlePageReq> pageBean){
         log.info("前端传递文章分页参数："+ JSON.toJSONString(pageBean));
         // 获取用户信息
-        CUser user = userService.getUserFromRequest(request);
+        CUser user = userService.getUserFromRequest();
         if (user == null){
             return CommonResult.unauthorized(null);
         }
@@ -76,7 +76,7 @@ public class ArticleController {
         return CommonResult.success(pageInfo);
     }
 
-    @PostMapping("/update")
+    @PutMapping
     @ApiOperation("文章修改")
     public CommonResult update(@RequestBody ArticleUpdateParam param){
         log.info("前端传递文章修改参数："+ JSON.toJSONString(param));

@@ -15,7 +15,7 @@ import java.util.Collection;
  * @date 23/8/2020 下午3:52
  */
 @AllArgsConstructor
-public class CUserDetails implements UserDetails {
+public class UserDetail implements UserDetails {
     private CUser user;
 
 

@@ -17,7 +17,7 @@ public interface UserService {
 
     String login(String userName, String password);
 
-    CUser getUserFromRequest(HttpServletRequest request);
+    CUser getUserFromRequest();
 
     CUser getUserFromToken(String token);
 
