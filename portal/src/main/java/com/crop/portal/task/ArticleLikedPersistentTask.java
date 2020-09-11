@@ -54,7 +54,10 @@ public class ArticleLikedPersistentTask {
             for (Object count : counts) {
                 totalCount = totalCount + (Integer)count;
             }
-            articleDao.updateByPrimaryKeySelective(new CArticle(a, null, null, totalCount, null));
+            CArticle article = new CArticle();
+            article.setComments(totalCount);
+            article.setId(a);
+            articleDao.updateByPrimaryKeySelective(article);
         });
     }
 }
