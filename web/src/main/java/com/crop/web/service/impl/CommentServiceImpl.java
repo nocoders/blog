@@ -2,7 +2,7 @@ package com.crop.web.service.impl;
 
 import com.crop.common.exception.ApiException;
 import com.crop.mapper.dao.ArticleDao;
-import com.crop.mapper.dto.CommentParam;
+import com.crop.mapper.dto.CommentReq;
 import com.crop.mapper.dto.CommentReplyParam;
 import com.crop.mapper.mapper.CArticleCommentReplyMapper;
 import com.crop.mapper.mapper.CArticleCommentsMapper;
@@ -48,7 +48,7 @@ public class CommentServiceImpl implements CommentService {
      * @return java.lang.Long
      */
     @Override
-    public Long comment(CommentParam param, CUser user) {
+    public Long comment(CommentReq param, CUser user) {
         // 检查文章是否发布
         CArticle article = articleDao.selectByPrimaryKey(param.getArticleId());
         if (null == article || 0 == article.getStatus()){

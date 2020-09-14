@@ -3,9 +3,8 @@ package com.crop.mapper.dto;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.Range;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -29,8 +28,7 @@ public class CommentReplyParam {
 
     @ApiModelProperty(value="回复类型，0：针对评论回复，1：针对回复回复",name="replyType")
     @NotNull(message = "回复类型不能为空")
-    @Min(value = 0,message = "回复类型最小为0")
-    @Max(value = 1,message = "回复类型最大为1")
+    @Range(min = 0,max = 1,message = "回复类型只能选0,1")
     private Integer replyType;
 
     @ApiModelProperty(value="目标用户id",name="toUid")

@@ -14,7 +14,7 @@ import javax.validation.constraints.NotNull;
  */
 @Data
 @ApiModel(description = "前端传递用户点赞参数")
-public class LikeParam {
+public class LikeReq {
 
     @ApiModelProperty(value = "文章id",required = true)
     @NotNull(message = "点赞文章id不能为空")

@@ -1,9 +1,8 @@
 package com.crop.web.controller;
 
 import com.crop.common.api.CommonResult;
-import static com.crop.common.api.CommonResult.*;
-import com.crop.common.api.FailMessage;
-import com.crop.mapper.dto.UserParam;
+import com.crop.common.api.ResultCode;
+import com.crop.mapper.dto.UserReq;
 import com.crop.mapper.model.CUser;
 import com.crop.web.service.UserService;
 import io.swagger.annotations.Api;
@@ -14,8 +13,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
+
+import static com.crop.common.api.CommonResult.success;
+import static com.crop.common.api.CommonResult.validateFailed;
 
 /**
  * 用户登录相关接口
@@ -36,15 +37,15 @@ public class CUserController {
 
     @PostMapping({"/register"})
     @ApiOperation("用户注册")
-    public CommonResult<CUser> register(@RequestBody @Validated UserParam userParam) {
-        CUser cUser = userService.register(userParam);
-        return cUser == null ? CommonResult.failed(FailMessage.DUPLICATE_USERNAME.getMessage()) : CommonResult.success(cUser);
+    public CommonResult<CUser> register(@RequestBody @Validated UserReq userReq) {
+        CUser cUser = userService.register(userReq);
+        return cUser == null ? CommonResult.failed(ResultCode.UNAUTHORIZED) : CommonResult.success(cUser);
     }
 
     @PostMapping({"/login"})
     @ApiOperation("用户登录")
-    public CommonResult login(@RequestBody @Validated UserParam userParam){
-        String  token = userService.login(userParam.getUserName(),userParam.getPassword());
+    public CommonResult login(@RequestBody @Validated UserReq userReq){
+        String  token = userService.login(userReq.getUserName(), userReq.getPassword());
         if (StringUtils.isBlank(token)){
             return validateFailed("用户名或密码错误");
         }

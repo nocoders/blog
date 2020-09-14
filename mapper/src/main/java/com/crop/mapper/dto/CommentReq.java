@@ -16,7 +16,7 @@ import javax.validation.constraints.NotNull;
  */
 @Data
 @ApiModel(value = "前端传递文章评论参数")
-public class CommentParam {
+public class CommentReq {
 
     @ApiModelProperty(value="文章id",name="articleId")
     @NotNull(message = "文章id不能为空")

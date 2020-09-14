@@ -2,9 +2,9 @@ package com.crop.web.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.crop.mapper.dao.ArticleDao;
-import com.crop.mapper.dto.ArticleUpdateParam;
+import com.crop.mapper.dto.ArticleUpdateReq;
 import com.crop.mapper.dto.ArticleDetail;
-import com.crop.mapper.dto.ArticlePageReq;
+import com.crop.mapper.dto.ArticlePageParam;
 import com.crop.mapper.dto.PageBean;
 import com.crop.mapper.mapper.CArticleContentMapper;
 import com.crop.mapper.model.CArticle;
@@ -46,7 +46,7 @@ public class ArticleServiceImpl implements ArticleService {
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public CArticle add(ArticleUpdateParam param, CUser user) {
+    public Long add(ArticleUpdateReq param, CUser user) {
 
         CArticle article = new CArticle();
         BeanUtil.copyProperties(param,article);
@@ -58,7 +58,7 @@ public class ArticleServiceImpl implements ArticleService {
 
         cArticleContentMapper.insertSelective(articleContent);
 
-        return article;
+        return article.getId();
     }
 
     /**
@@ -82,11 +82,11 @@ public class ArticleServiceImpl implements ArticleService {
      * @return java.util.List<com.crop.mapper.dto.ArticleBean>
      */
     @Override
-    public List<CArticle> pageList(PageBean<ArticlePageReq> pageBean) {
+    public List<CArticle> pageList(PageBean<ArticlePageParam> pageBean) {
 
         PageHelper.startPage(pageBean.getPageNum(),pageBean.getPageSize());
 
-        ArticlePageReq req = pageBean.getParam();
+        ArticlePageParam req = pageBean.getParam();
         CArticleExample example = new CArticleExample();
         CArticleExample.Criteria criteria = example.createCriteria();
         criteria.andUserIdEqualTo(req.getUserId());
@@ -113,7 +113,7 @@ public class ArticleServiceImpl implements ArticleService {
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public int update(ArticleUpdateParam param) {
+    public int update(ArticleUpdateReq param) {
         Long articleId = param.getId();
         ArticleDetail articleDetail = articleDao.getArticleDetailById(articleId);
         if (null != articleDetail && param.getUserId().equals(articleDetail.getUserId())

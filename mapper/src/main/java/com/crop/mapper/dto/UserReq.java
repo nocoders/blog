@@ -18,7 +18,7 @@ import javax.validation.constraints.Pattern;
  */
 @Data
 @ApiModel(value = "用户注册登录前端传递参数",description = "注册登录用户名密码必填，其他非必填")
-public class UserParam {
+public class UserReq {
 
     @ApiModelProperty(value = "用户名", required = true)
     @NotBlank(message = "用户名称不能为空")

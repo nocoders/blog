@@ -1,7 +1,7 @@
 package com.crop.web.controller;
 
 import com.crop.common.api.CommonResult;
-import com.crop.mapper.dto.CommentParam;
+import com.crop.mapper.dto.CommentReq;
 import com.crop.mapper.dto.CommentReplyParam;
 import com.crop.mapper.dto.IdBean;
 import com.crop.mapper.model.CUser;
@@ -37,7 +37,7 @@ public class CommentController {
 
     @PostMapping("/comment")
     @ApiOperation("文章评论接口,用于对文章评论")
-    public CommonResult<IdBean> comment(@RequestBody @Validated CommentParam param){
+    public CommonResult<IdBean> comment(@RequestBody @Validated CommentReq param){
         // 获取用户信息
         CUser user = userService.getUserFromRequest();
         if (user == null){

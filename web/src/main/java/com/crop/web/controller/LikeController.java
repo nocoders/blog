@@ -1,12 +1,8 @@
 package com.crop.web.controller;
 
 import com.crop.common.api.CommonResult;
-import com.crop.common.api.FailMessage;
-import com.crop.mapper.dto.LikeParam;
-import com.crop.mapper.model.CArticleLikes;
-import com.crop.mapper.model.CUser;
+import com.crop.mapper.dto.LikeReq;
 import com.crop.web.service.LikeService;
-import com.crop.web.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -36,7 +32,7 @@ public class LikeController {
 
     @PostMapping({"/like"})
     @ApiOperation("文章点赞")
-    public CommonResult register(@RequestBody @Validated LikeParam param, HttpServletRequest request) {
+    public CommonResult register(@RequestBody @Validated LikeReq param, HttpServletRequest request) {
 
         boolean likeResult = likeService.like(param,request);
 

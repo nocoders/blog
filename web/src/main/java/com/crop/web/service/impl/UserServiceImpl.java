@@ -2,7 +2,7 @@ package com.crop.web.service.impl;
 
 import com.crop.common.exception.Asserts;
 import com.crop.mapper.dao.UserDao;
-import com.crop.mapper.dto.UserParam;
+import com.crop.mapper.dto.UserReq;
 import com.crop.mapper.model.CUser;
 import com.crop.mapper.model.CUserExample;
 import com.crop.security.util.JwtTokenUtil;
@@ -48,17 +48,17 @@ public class UserServiceImpl implements UserService {
     private JwtTokenUtil tokenUtil;
 
     @Override
-    public CUser register(UserParam userParam) {
+    public CUser register(UserReq userReq) {
         CUserExample example = new CUserExample();
-        example.createCriteria().andUserNameEqualTo(userParam.getUserName());
+        example.createCriteria().andUserNameEqualTo(userReq.getUserName());
         long count = userDao.countByExample(example);
         if (count > 0L) {
             return null;
         } else {
             CUser user = new CUser();
-            String password = passwordEncoder.encode(userParam.getPassword());
-            userParam.setPassword(password);
-            BeanUtils.copyProperties(userParam, user);
+            String password = passwordEncoder.encode(userReq.getPassword());
+            userReq.setPassword(password);
+            BeanUtils.copyProperties(userReq, user);
             userDao.insertSelective(user);
             return user;
         }

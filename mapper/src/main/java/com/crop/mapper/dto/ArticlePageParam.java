@@ -16,7 +16,7 @@ import javax.validation.constraints.Size;
 @Getter
 @Setter
 @ApiModel(value = "文章分页请求参数")
-public class ArticlePageReq {
+public class ArticlePageParam {
 
     @ApiModelProperty(value = "文章标题")
     private String title;

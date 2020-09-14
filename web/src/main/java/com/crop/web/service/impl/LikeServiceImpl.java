@@ -1,24 +1,20 @@
 package com.crop.web.service.impl;
 
-import com.crop.common.api.CommonResult;
 import com.crop.common.api.RedisLockEntity;
 import com.crop.common.exception.ApiException;
 import com.crop.common.service.impl.RedisServiceImpl;
 import com.crop.common.util.RedisKeyUtil;
 import com.crop.mapper.dao.ArticleDao;
-import com.crop.mapper.dto.LikeParam;
+import com.crop.mapper.dto.LikeReq;
 import com.crop.mapper.mapper.CArticleLikesMapper;
 import com.crop.mapper.model.CArticle;
-import com.crop.mapper.model.CArticleLikes;
 import com.crop.mapper.model.CUser;
 import com.crop.web.service.LikeService;
 import com.crop.web.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -55,7 +51,7 @@ public class LikeServiceImpl implements LikeService {
      * @return com.crop.mapper.model.CArticleLikes
      */
     @Override
-    public boolean like(LikeParam param, HttpServletRequest request) {
+    public boolean like(LikeReq param, HttpServletRequest request) {
 
         String token = request.getHeader(tokenHeader);
         CUser user = userService.getUserFromToken(token);

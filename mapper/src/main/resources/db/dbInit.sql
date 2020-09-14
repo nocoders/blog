@@ -106,7 +106,6 @@ create table c_article_likes
     id                   bigint(20) not null auto_increment,
     article_id           bigint(20) not null comment '文章id',
     user_id              bigint(20) not null comment '点赞用户id',
-    username             varchar(32) not null comment '点赞用户名名称称',
     status               tinyint(1) not null default 0 comment '点赞状态，1：点赞，0：点赞后又取消',
     create_time           timestamp default CURRENT_TIMESTAMP,
     update_time           timestamp default CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -122,10 +121,29 @@ create table c_article_collections
 (
     id                   bigint(20) not null auto_increment,
     article_id           bigint(20) not null comment '文章id',
-    article_url          varchar(128) not null comment '收藏文章url',
     article_name         varchar(64) not null comment '文章名称',
+    type                 tinyint(1) comment '收藏类型，0-博客，暂定只有一种类型',
     user_id              bigint(20) not null comment '收藏用户id',
+    folder_id            bigint(20) comment '收藏文件夹id',
     create_time          timestamp default CURRENT_TIMESTAMP,
     update_time          timestamp default CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     primary key (id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='文章收藏记录表';
+
+-- drop table if exists c_article_collections_folder;
+
+/*==============================================================*/
+/* Table: c_article_collections_folder                        */
+/*==============================================================*/
+create table c_article_collections_folder
+(
+    id                   bigint(20) not null auto_increment,
+    user_id              bigint(20) not null comment '用户id',
+    is_default           tinyint(1) not null default 0 comment '是否为默认文件夹,0-是，1-否',
+    is_private           tinyint(1) default 0 comment '是否私人文件夹，0-否，1-是，默认0',
+    name                 varchar(32) not null comment '文件夹名称',
+    description          varchar(64) default '' comment '文件夹描述',
+    create_time          timestamp default CURRENT_TIMESTAMP,
+    update_time          timestamp default CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    primary key (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='文章收藏文件夹';

@@ -6,7 +6,6 @@ import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
 import java.util.Date;
 import lombok.Data;
-import org.hibernate.validator.constraints.Length;
 
 @ApiModel(value = "com.crop.mapper.model.CArticleLikes",description="")
 @Data
@@ -19,10 +18,6 @@ public class CArticleLikes implements Serializable {
 
     @ApiModelProperty(value="点赞用户id",name="userId")
     private Long userId;
-
-    @ApiModelProperty(value="点赞用户名名称称",name="username")
-    @Length(max = 32, message = "点赞用户名名称称名长度最长为32")
-    private String username;
 
     @ApiModelProperty(value="点赞状态，1：点赞，0：点赞后又取消",name="status")
     private Integer status;
@@ -46,7 +41,6 @@ public class CArticleLikes implements Serializable {
         sb.append(", id=").append(id);
         sb.append(", articleId=").append(articleId);
         sb.append(", userId=").append(userId);
-        sb.append(", username=").append(username);
         sb.append(", status=").append(status);
         sb.append(", createTime=").append(createTime);
         sb.append(", updateTime=").append(updateTime);

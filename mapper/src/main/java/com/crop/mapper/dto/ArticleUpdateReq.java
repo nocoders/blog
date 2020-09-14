@@ -16,7 +16,7 @@ import javax.validation.constraints.NotNull;
  */
 @Data
 @ApiModel(value = "文章添加修改时参数",description = "文章添加修改时参数")
-public class ArticleUpdateParam {
+public class ArticleUpdateReq {
 
     @ApiModelProperty(value = "文章id,添加时不传递，修改时传递")
     private Long id;

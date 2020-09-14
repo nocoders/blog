@@ -3,7 +3,9 @@ package com.crop.portal.task;
 import com.crop.common.service.impl.RedisServiceImpl;
 import com.crop.common.util.RedisKeyUtil;
 import com.crop.mapper.dao.ArticleDao;
+import com.crop.mapper.dao.LikeDao;
 import com.crop.mapper.model.CArticle;
+import com.crop.mapper.model.CArticleLikes;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,7 +13,9 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -31,6 +35,9 @@ public class ArticleLikedPersistentTask {
     private Integer threshold;
 
     @Autowired
+    private LikeDao likeDao;
+
+    @Autowired
     private RedisServiceImpl redisService;
 
     /**
@@ -48,16 +55,31 @@ public class ArticleLikedPersistentTask {
             log.info("没有已发布的文章");
             return;
         }
+        ArrayList<CArticleLikes> cArticles = new ArrayList<>(64);
+
         distributeArticleIds.forEach(a ->{
-            List<Object> counts = redisService.hVals(RedisKeyUtil.getArticleLikedKey(a));
+            Map<Object, Object> articleLikesMap = redisService.hGetAll(RedisKeyUtil.getArticleLikedKey(a));
             int totalCount = 0;
-            for (Object count : counts) {
-                totalCount = totalCount + (Integer)count;
+
+            for (Map.Entry<Object, Object> entry : articleLikesMap.entrySet()) {
+                Long userId = (Long) entry.getKey();
+                Integer liked = (Integer) entry.getValue();
+                totalCount += liked;
+                CArticleLikes likes = new CArticleLikes();
+                likes.setArticleId(a);
+                likes.setUserId(userId);
+                likes.setStatus(liked);
+                cArticles.add(likes);
+                if (cArticles.size()>=threshold){
+                    likeDao.batchInsert(cArticles);
+                    cArticles.clear();
+                }
             }
             CArticle article = new CArticle();
             article.setComments(totalCount);
             article.setId(a);
             articleDao.updateByPrimaryKeySelective(article);
+
         });
     }
 }

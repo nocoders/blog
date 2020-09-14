@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.crop.mapper.mapper.CArticleLikesMapper">
-  <resultMap id="BaseResultMap" type="com.crop.mapper.model.CArticleLikes">
+<mapper namespace="com.crop.mapper.mapper.CArticleCollectionsFolderMapper">
+  <resultMap id="BaseResultMap" type="com.crop.mapper.model.CArticleCollectionsFolder">
     <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="article_id" jdbcType="BIGINT" property="articleId" />
     <result column="user_id" jdbcType="BIGINT" property="userId" />
-    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="is_default" jdbcType="TINYINT" property="isDefault" />
+    <result column="is_private" jdbcType="TINYINT" property="isPrivate" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
@@ -68,15 +70,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, article_id, user_id, status, create_time, update_time
+    id, user_id, name, is_default, is_private, description, create_time, update_time
   </sql>
-  <select id="selectByExample" parameterType="com.crop.mapper.model.CArticleLikesExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.crop.mapper.model.CArticleCollectionsFolderExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from c_article_likes
+    from c_article_collections_folder
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -87,42 +89,50 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from c_article_likes
+    from c_article_collections_folder
     where id = #{id,jdbcType=BIGINT}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from c_article_likes
+    delete from c_article_collections_folder
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="com.crop.mapper.model.CArticleLikesExample">
-    delete from c_article_likes
+  <delete id="deleteByExample" parameterType="com.crop.mapper.model.CArticleCollectionsFolderExample">
+    delete from c_article_collections_folder
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.crop.mapper.model.CArticleLikes">
+  <insert id="insert" parameterType="com.crop.mapper.model.CArticleCollectionsFolder">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into c_article_likes (article_id, user_id, status, 
-      create_time, update_time)
-    values (#{articleId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{status,jdbcType=TINYINT}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+    insert into c_article_collections_folder (user_id, name, is_default, 
+      is_private, description, create_time, 
+      update_time)
+    values (#{userId,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{isDefault,jdbcType=TINYINT}, 
+      #{isPrivate,jdbcType=TINYINT}, #{description,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.crop.mapper.model.CArticleLikes">
+  <insert id="insertSelective" parameterType="com.crop.mapper.model.CArticleCollectionsFolder">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into c_article_likes
+    insert into c_article_collections_folder
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="articleId != null">
-        article_id,
-      </if>
       <if test="userId != null">
         user_id,
       </if>
-      <if test="status != null">
-        status,
+      <if test="name != null">
+        name,
+      </if>
+      <if test="isDefault != null">
+        is_default,
+      </if>
+      <if test="isPrivate != null">
+        is_private,
+      </if>
+      <if test="description != null">
+        description,
       </if>
       <if test="createTime != null">
         create_time,
@@ -132,14 +142,20 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="articleId != null">
-        #{articleId,jdbcType=BIGINT},
-      </if>
       <if test="userId != null">
         #{userId,jdbcType=BIGINT},
       </if>
-      <if test="status != null">
-        #{status,jdbcType=TINYINT},
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="isDefault != null">
+        #{isDefault,jdbcType=TINYINT},
+      </if>
+      <if test="isPrivate != null">
+        #{isPrivate,jdbcType=TINYINT},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
@@ -149,26 +165,32 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.crop.mapper.model.CArticleLikesExample" resultType="java.lang.Long">
-    select count(*) from c_article_likes
+  <select id="countByExample" parameterType="com.crop.mapper.model.CArticleCollectionsFolderExample" resultType="java.lang.Long">
+    select count(*) from c_article_collections_folder
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update c_article_likes
+    update c_article_collections_folder
     <set>
       <if test="record.id != null">
         id = #{record.id,jdbcType=BIGINT},
       </if>
-      <if test="record.articleId != null">
-        article_id = #{record.articleId,jdbcType=BIGINT},
-      </if>
       <if test="record.userId != null">
         user_id = #{record.userId,jdbcType=BIGINT},
       </if>
-      <if test="record.status != null">
-        status = #{record.status,jdbcType=TINYINT},
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isDefault != null">
+        is_default = #{record.isDefault,jdbcType=TINYINT},
+      </if>
+      <if test="record.isPrivate != null">
+        is_private = #{record.isPrivate,jdbcType=TINYINT},
+      </if>
+      <if test="record.description != null">
+        description = #{record.description,jdbcType=VARCHAR},
       </if>
       <if test="record.createTime != null">
         create_time = #{record.createTime,jdbcType=TIMESTAMP},
@@ -182,28 +204,36 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update c_article_likes
+    update c_article_collections_folder
     set id = #{record.id,jdbcType=BIGINT},
-      article_id = #{record.articleId,jdbcType=BIGINT},
       user_id = #{record.userId,jdbcType=BIGINT},
-      status = #{record.status,jdbcType=TINYINT},
+      name = #{record.name,jdbcType=VARCHAR},
+      is_default = #{record.isDefault,jdbcType=TINYINT},
+      is_private = #{record.isPrivate,jdbcType=TINYINT},
+      description = #{record.description,jdbcType=VARCHAR},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
       update_time = #{record.updateTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.crop.mapper.model.CArticleLikes">
-    update c_article_likes
+  <update id="updateByPrimaryKeySelective" parameterType="com.crop.mapper.model.CArticleCollectionsFolder">
+    update c_article_collections_folder
     <set>
-      <if test="articleId != null">
-        article_id = #{articleId,jdbcType=BIGINT},
-      </if>
       <if test="userId != null">
         user_id = #{userId,jdbcType=BIGINT},
       </if>
-      <if test="status != null">
-        status = #{status,jdbcType=TINYINT},
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="isDefault != null">
+        is_default = #{isDefault,jdbcType=TINYINT},
+      </if>
+      <if test="isPrivate != null">
+        is_private = #{isPrivate,jdbcType=TINYINT},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},
@@ -214,11 +244,13 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.crop.mapper.model.CArticleLikes">
-    update c_article_likes
-    set article_id = #{articleId,jdbcType=BIGINT},
-      user_id = #{userId,jdbcType=BIGINT},
-      status = #{status,jdbcType=TINYINT},
+  <update id="updateByPrimaryKey" parameterType="com.crop.mapper.model.CArticleCollectionsFolder">
+    update c_article_collections_folder
+    set user_id = #{userId,jdbcType=BIGINT},
+      name = #{name,jdbcType=VARCHAR},
+      is_default = #{isDefault,jdbcType=TINYINT},
+      is_private = #{isPrivate,jdbcType=TINYINT},
+      description = #{description,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}

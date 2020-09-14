@@ -225,76 +225,6 @@ public class CArticleCollectionsExample {
             return (Criteria) this;
         }
 
-        public Criteria andArticleUrlIsNull() {
-            addCriterion("article_url is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andArticleUrlIsNotNull() {
-            addCriterion("article_url is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andArticleUrlEqualTo(String value) {
-            addCriterion("article_url =", value, "articleUrl");
-            return (Criteria) this;
-        }
-
-        public Criteria andArticleUrlNotEqualTo(String value) {
-            addCriterion("article_url <>", value, "articleUrl");
-            return (Criteria) this;
-        }
-
-        public Criteria andArticleUrlGreaterThan(String value) {
-            addCriterion("article_url >", value, "articleUrl");
-            return (Criteria) this;
-        }
-
-        public Criteria andArticleUrlGreaterThanOrEqualTo(String value) {
-            addCriterion("article_url >=", value, "articleUrl");
-            return (Criteria) this;
-        }
-
-        public Criteria andArticleUrlLessThan(String value) {
-            addCriterion("article_url <", value, "articleUrl");
-            return (Criteria) this;
-        }
-
-        public Criteria andArticleUrlLessThanOrEqualTo(String value) {
-            addCriterion("article_url <=", value, "articleUrl");
-            return (Criteria) this;
-        }
-
-        public Criteria andArticleUrlLike(String value) {
-            addCriterion("article_url like", value, "articleUrl");
-            return (Criteria) this;
-        }
-
-        public Criteria andArticleUrlNotLike(String value) {
-            addCriterion("article_url not like", value, "articleUrl");
-            return (Criteria) this;
-        }
-
-        public Criteria andArticleUrlIn(List<String> values) {
-            addCriterion("article_url in", values, "articleUrl");
-            return (Criteria) this;
-        }
-
-        public Criteria andArticleUrlNotIn(List<String> values) {
-            addCriterion("article_url not in", values, "articleUrl");
-            return (Criteria) this;
-        }
-
-        public Criteria andArticleUrlBetween(String value1, String value2) {
-            addCriterion("article_url between", value1, value2, "articleUrl");
-            return (Criteria) this;
-        }
-
-        public Criteria andArticleUrlNotBetween(String value1, String value2) {
-            addCriterion("article_url not between", value1, value2, "articleUrl");
-            return (Criteria) this;
-        }
-
         public Criteria andArticleNameIsNull() {
             addCriterion("article_name is null");
             return (Criteria) this;
@@ -365,6 +295,66 @@ public class CArticleCollectionsExample {
             return (Criteria) this;
         }
 
+        public Criteria andTypeIsNull() {
+            addCriterion("type is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeIsNotNull() {
+            addCriterion("type is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeEqualTo(Byte value) {
+            addCriterion("type =", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeNotEqualTo(Byte value) {
+            addCriterion("type <>", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeGreaterThan(Byte value) {
+            addCriterion("type >", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeGreaterThanOrEqualTo(Byte value) {
+            addCriterion("type >=", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeLessThan(Byte value) {
+            addCriterion("type <", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeLessThanOrEqualTo(Byte value) {
+            addCriterion("type <=", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeIn(List<Byte> values) {
+            addCriterion("type in", values, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeNotIn(List<Byte> values) {
+            addCriterion("type not in", values, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeBetween(Byte value1, Byte value2) {
+            addCriterion("type between", value1, value2, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeNotBetween(Byte value1, Byte value2) {
+            addCriterion("type not between", value1, value2, "type");
+            return (Criteria) this;
+        }
+
         public Criteria andUserIdIsNull() {
             addCriterion("user_id is null");
             return (Criteria) this;
@@ -422,6 +412,66 @@ public class CArticleCollectionsExample {
 
         public Criteria andUserIdNotBetween(Long value1, Long value2) {
             addCriterion("user_id not between", value1, value2, "userId");
+            return (Criteria) this;
+        }
+
+        public Criteria andFolderIdIsNull() {
+            addCriterion("folder_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andFolderIdIsNotNull() {
+            addCriterion("folder_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andFolderIdEqualTo(Long value) {
+            addCriterion("folder_id =", value, "folderId");
+            return (Criteria) this;
+        }
+
+        public Criteria andFolderIdNotEqualTo(Long value) {
+            addCriterion("folder_id <>", value, "folderId");
+            return (Criteria) this;
+        }
+
+        public Criteria andFolderIdGreaterThan(Long value) {
+            addCriterion("folder_id >", value, "folderId");
+            return (Criteria) this;
+        }
+
+        public Criteria andFolderIdGreaterThanOrEqualTo(Long value) {
+            addCriterion("folder_id >=", value, "folderId");
+            return (Criteria) this;
+        }
+
+        public Criteria andFolderIdLessThan(Long value) {
+            addCriterion("folder_id <", value, "folderId");
+            return (Criteria) this;
+        }
+
+        public Criteria andFolderIdLessThanOrEqualTo(Long value) {
+            addCriterion("folder_id <=", value, "folderId");
+            return (Criteria) this;
+        }
+
+        public Criteria andFolderIdIn(List<Long> values) {
+            addCriterion("folder_id in", values, "folderId");
+            return (Criteria) this;
+        }
+
+        public Criteria andFolderIdNotIn(List<Long> values) {
+            addCriterion("folder_id not in", values, "folderId");
+            return (Criteria) this;
+        }
+
+        public Criteria andFolderIdBetween(Long value1, Long value2) {
+            addCriterion("folder_id between", value1, value2, "folderId");
+            return (Criteria) this;
+        }
+
+        public Criteria andFolderIdNotBetween(Long value1, Long value2) {
+            addCriterion("folder_id not between", value1, value2, "folderId");
             return (Criteria) this;
         }
 
