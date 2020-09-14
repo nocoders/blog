@@ -60,7 +60,7 @@ public class LikeServiceImpl implements LikeService {
         }
 
         CArticle article = articleDao.selectByPrimaryKey(param.getArticleId());
-        if (null == article || 0 == article.getStatus()){
+        if (null == article || 1 == article.getStatus()){
             throw new ApiException("文章未发布，不能点赞。");
         }
         // 从redis中根据文章id，用户id
@@ -86,6 +86,11 @@ public class LikeServiceImpl implements LikeService {
                 redisService.hSet(articleLikedKey,String.valueOf(user.getId()),1);
             }
             redisService.unlockLua(redisLockEntity);
+            // 数据库修改点赞数量
+            article.setLikes(article.getLikes()+param.getType());
+            article.setCreateTime(null);
+            article.setUpdateTime(null);
+            articleDao.updateByPrimaryKeySelective(article);
             return true;
         }else {
             return false;

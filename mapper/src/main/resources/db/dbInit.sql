@@ -121,9 +121,9 @@ create table c_article_collections
 (
     id                   bigint(20) not null auto_increment,
     article_id           bigint(20) not null comment '文章id',
-    article_name         varchar(64) not null comment '文章名称',
-    type                 tinyint(1) comment '收藏类型，0-博客，暂定只有一种类型',
+    `article_name` varchar(64) NOT NULL COMMENT '文章名称',
     user_id              bigint(20) not null comment '收藏用户id',
+    type                 tinyint(1) comment '收藏类型，0-博客，暂定只有一种类型',
     folder_id            bigint(20) comment '收藏文件夹id',
     create_time          timestamp default CURRENT_TIMESTAMP,
     update_time          timestamp default CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,

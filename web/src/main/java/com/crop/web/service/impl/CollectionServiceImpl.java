@@ -2,9 +2,12 @@ package com.crop.web.service.impl;
 
 import com.crop.common.api.ResultCode;
 import com.crop.common.exception.ApiException;
+import com.crop.mapper.dao.ArticleDao;
 import com.crop.mapper.dao.CollectionFolderDao;
 import com.crop.mapper.dto.CollectionFolderReq;
+import com.crop.mapper.dto.CollectorReq;
 import com.crop.mapper.mapper.CArticleCollectionsFolderMapper;
+import com.crop.mapper.model.CArticle;
 import com.crop.mapper.model.CArticleCollectionsFolder;
 import com.crop.mapper.model.CArticleCollectionsFolderExample;
 import com.crop.mapper.model.CUser;
@@ -27,6 +30,10 @@ public class CollectionServiceImpl implements CollectionService {
 
     @Autowired
     private CollectionFolderDao collectionFolderDao;
+
+    @Autowired
+    private ArticleDao articleDao;
+
     /**
      * 收藏文件夹创建
      * @param req 前端传递参数
@@ -64,5 +71,28 @@ public class CollectionServiceImpl implements CollectionService {
         example.createCriteria().andUserIdEqualTo(user.getId());
 
         return collectionFolderDao.selectByExample(example);
+    }
+
+    /**
+     * 文章收藏
+     * @param req
+     * @author linmeng
+     * @date 14/9/2020 下午2:59
+     * @return java.lang.Long
+     */
+    @Override
+    public Long collect(CollectorReq req,Long userId) {
+        // 检查文章，收藏文件夹是否存在
+        CArticle article = articleDao.selectByPrimaryKey(req.getArticleId());
+        if (article==null){
+            throw new ApiException(ResultCode.BAD_REQUEST);
+        }
+        CArticleCollectionsFolder collectionsFolder = collectionFolderDao.selectByPrimaryKey(req.getFolderId());
+        if (collectionsFolder==null){
+            throw new ApiException(ResultCode.BAD_REQUEST);
+        }
+
+
+        return null;
     }
 }

@@ -3,6 +3,7 @@ package com.crop.web.controller;
 import com.alibaba.fastjson.JSON;
 import com.crop.common.api.CommonResult;
 import com.crop.mapper.dto.CollectionFolderReq;
+import com.crop.mapper.dto.CollectorReq;
 import com.crop.mapper.dto.IdBean;
 import com.crop.mapper.model.CArticleCollectionsFolder;
 import com.crop.mapper.model.CUser;
@@ -64,4 +65,18 @@ public class CollectionController {
 
         return list.isEmpty() ? CommonResult.failed():CommonResult.success(list);
     }
+
+    @PostMapping({"/collect"})
+    @ApiOperation("文章收藏")
+    public CommonResult collect(@RequestBody @Validated CollectorReq req){
+        // 获取用户信息
+        CUser user = userService.getUserFromRequest();
+        if (user == null){
+            return CommonResult.unauthorized(null);
+        }
+        Long collectionId =collectionService.collect(req,user.getId());
+
+        return collectionId == null ?  CommonResult.failed():CommonResult.success(new IdBean(collectionId));
+    }
+
 }
