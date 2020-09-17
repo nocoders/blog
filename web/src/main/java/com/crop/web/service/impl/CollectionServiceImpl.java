@@ -7,10 +7,7 @@ import com.crop.mapper.dao.CollectionFolderDao;
 import com.crop.mapper.dto.CollectionFolderReq;
 import com.crop.mapper.dto.CollectorReq;
 import com.crop.mapper.mapper.CArticleCollectionsFolderMapper;
-import com.crop.mapper.model.CArticle;
-import com.crop.mapper.model.CArticleCollectionsFolder;
-import com.crop.mapper.model.CArticleCollectionsFolderExample;
-import com.crop.mapper.model.CUser;
+import com.crop.mapper.model.*;
 import com.crop.web.service.CollectionService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -91,7 +88,7 @@ public class CollectionServiceImpl implements CollectionService {
         if (collectionsFolder==null){
             throw new ApiException(ResultCode.BAD_REQUEST);
         }
-
+        CArticleCollections cArticleCollections = new CArticleCollections();
 
         return null;
     }

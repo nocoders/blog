@@ -1,6 +1,9 @@
 package com.crop.web.service.impl;
 
+import com.crop.common.api.RedisConstant;
 import com.crop.common.exception.ApiException;
+import com.crop.common.service.impl.RedisServiceImpl;
+import com.crop.common.util.RedisKeyUtil;
 import com.crop.mapper.dao.ArticleDao;
 import com.crop.mapper.dto.CommentReq;
 import com.crop.mapper.dto.CommentReplyParam;
@@ -15,6 +18,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 /**
@@ -37,7 +41,7 @@ public class CommentServiceImpl implements CommentService {
     private CArticleCommentReplyMapper replyMapper;
 
     @Autowired
-    private UserServiceImpl userService;
+    private RedisServiceImpl redisService;
 
     /**
      * 对文章进行评论
@@ -50,13 +54,27 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public Long comment(CommentReq param, CUser user) {
         // 检查文章是否发布
-        CArticle article = articleDao.selectByPrimaryKey(param.getArticleId());
+        Long articleId = param.getArticleId();
+        CArticle article = articleDao.selectByPrimaryKey(articleId);
         if (null == article || 0 == article.getStatus()){
             throw new ApiException("文章未发布，不能点赞。");
         }
+        Long userId = article.getUserId();
+        String userArticleCommentKey = RedisKeyUtil.getUserArticleCommentKey(userId);
+        if (redisService.hHasKey(userArticleCommentKey,String.valueOf(articleId))){
+            redisService.hIncr(userArticleCommentKey,String.valueOf(articleId),1L);
+        }else {
+            redisService.hSet(userArticleCommentKey,String.valueOf(articleId),1);
+        }
+        if (redisService.hHasKey(RedisConstant.USER_COMMENT_COUNT,String.valueOf(userId))){
+            redisService.hIncr(RedisConstant.USER_COMMENT_COUNT,String.valueOf(userId),1L);
+        }else {
+            redisService.hSet(RedisConstant.USER_COMMENT_COUNT,String.valueOf(userId),1);
+        }
+        
         CArticleComments comments = new CArticleComments();
-        comments.setArticleId(param.getArticleId());
-        comments.setFromUid(user.getId());
+        comments.setArticleId(articleId);
+        comments.setFromUid(userId);
         comments.setContent(param.getContent());
         commentsMapper.insertSelective(comments);
 

@@ -37,10 +37,6 @@ create table c_article
     description          varchar(128) not null default '' comment '文章描述',
     is_original          tinyint(1) default 1 comment '是否原创，1-原创，0-转载',
     status               tinyint(1) default 1 comment '状态，1-草稿，0-发布',
-    views                int(10) default 0 comment '浏览量',
-    comments             int(10) default 0 comment '评论数量',
-    likes                int(10) default 0 comment '点赞数量',
-    `collections`        int(10) DEFAULT 0 COMMENT '收藏量',
     deleted              tinyint(1) default 0 comment '是否删除，0-未删除，1-已删除',
     create_time          timestamp default CURRENT_TIMESTAMP,
     update_time          timestamp default CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -109,7 +105,8 @@ create table c_article_likes
     status               tinyint(1) not null default 0 comment '点赞状态，1：点赞，0：点赞后又取消',
     create_time           timestamp default CURRENT_TIMESTAMP,
     update_time           timestamp default CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    primary key (id)
+    primary key (id),
+    UNIQUE KEY `userArticleIndex` (`article_id`,`user_id`) USING BTREE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='文章点赞表';
 
 -- drop table if exists c_article_collections;

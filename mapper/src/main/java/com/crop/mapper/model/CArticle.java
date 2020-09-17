@@ -31,18 +31,6 @@ public class CArticle implements Serializable {
     @ApiModelProperty(value="状态，1-草稿，0-发布",name="status")
     private Integer status;
 
-    @ApiModelProperty(value="浏览量",name="views")
-    private Integer views;
-
-    @ApiModelProperty(value="评论数量",name="comments")
-    private Integer comments;
-
-    @ApiModelProperty(value="点赞数量",name="likes")
-    private Integer likes;
-
-    @ApiModelProperty(value="收藏量",name="collections")
-    private Integer collections;
-
     @ApiModelProperty(value="是否删除，0-未删除，1-已删除",name="deleted")
     private Integer deleted;
 
@@ -68,10 +56,6 @@ public class CArticle implements Serializable {
         sb.append(", description=").append(description);
         sb.append(", isOriginal=").append(isOriginal);
         sb.append(", status=").append(status);
-        sb.append(", views=").append(views);
-        sb.append(", comments=").append(comments);
-        sb.append(", likes=").append(likes);
-        sb.append(", collections=").append(collections);
         sb.append(", deleted=").append(deleted);
         sb.append(", createTime=").append(createTime);
         sb.append(", updateTime=").append(updateTime);

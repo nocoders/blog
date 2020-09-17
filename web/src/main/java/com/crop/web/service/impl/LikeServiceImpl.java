@@ -1,5 +1,6 @@
 package com.crop.web.service.impl;
 
+import com.crop.common.api.RedisConstant;
 import com.crop.common.api.RedisLockEntity;
 import com.crop.common.exception.ApiException;
 import com.crop.common.service.impl.RedisServiceImpl;
@@ -8,6 +9,7 @@ import com.crop.mapper.dao.ArticleDao;
 import com.crop.mapper.dto.LikeReq;
 import com.crop.mapper.mapper.CArticleLikesMapper;
 import com.crop.mapper.model.CArticle;
+import com.crop.mapper.model.CArticleLikes;
 import com.crop.mapper.model.CUser;
 import com.crop.web.service.LikeService;
 import com.crop.web.service.UserService;
@@ -17,6 +19,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.constraints.NotNull;
 
 /**
  * 点赞相关service
@@ -45,6 +48,7 @@ public class LikeServiceImpl implements LikeService {
      * 用户点赞，校验文章状态
      * 判断redis中有没有该文章该用户的点赞记录
      * 缓存没有的话，判断点赞 状态，点赞状态 相加小于0，或大于1，参数错误
+     * 点赞，redis存储相关点赞数据，不持久化到数据库，直接
      * @param param
      * @author linmeng
      * @date 2/9/2020 下午3:04
@@ -55,42 +59,52 @@ public class LikeServiceImpl implements LikeService {
 
         String token = request.getHeader(tokenHeader);
         CUser user = userService.getUserFromToken(token);
-        if (user == null || null == user.getId()){
+        Long userId, articleId = param.getArticleId();
+        if (user == null || null == (userId = user.getId()) ){
             throw new UsernameNotFoundException("用户名或密码错误");
         }
 
-        CArticle article = articleDao.selectByPrimaryKey(param.getArticleId());
+        CArticle article = articleDao.selectByPrimaryKey(articleId);
         if (null == article || 1 == article.getStatus()){
             throw new ApiException("文章未发布，不能点赞。");
         }
-        // 从redis中根据文章id，用户id
-        String articleLikedKey = RedisKeyUtil.getArticleLikedKey(param.getArticleId());
-        String articleLikeLockKey = RedisKeyUtil.getArticleUserLikeLockKey(param.getArticleId(), user.getId());
+        Long likedUserId = article.getUserId();
+        // 从redis中根据被点赞用户id，文章id作为一个hash，点赞用户id为key
+        String articleLikedKey = RedisKeyUtil.getArticleLikedKey(articleId);
+        String articleLikeLockKey = RedisKeyUtil.getArticleUserLikeLockKey(articleId, userId);
         RedisLockEntity redisLockEntity = RedisLockEntity.builder().lockKey(articleLikeLockKey).token(token).build();
         if (redisService.lock(redisLockEntity)){
-            Boolean likeExists = redisService.hHasKey(articleLikedKey, String.valueOf(user.getId()));
+            Boolean likeExists = redisService.hHasKey(articleLikedKey, String.valueOf(userId));
+            Integer afterLiked = param.getType();
             if (likeExists){
-                Integer liked = (Integer) redisService.hGet(articleLikedKey, String.valueOf(user.getId()));
-                Integer afterLiked = liked + param.getType();
+                Integer liked = (Integer) redisService.hGet(articleLikedKey, String.valueOf(userId));
+                afterLiked = liked + afterLiked;
                 if (afterLiked < 0 || afterLiked > 1){
                     redisService.unlockLua(redisLockEntity);
                     throw new ApiException("点赞类型错误");
                 }
-                redisService.hSet(articleLikedKey,String.valueOf(user.getId()),afterLiked);
-                return true;
+                redisService.hSet(articleLikedKey,String.valueOf(userId),afterLiked);
             }else {
-                if (param.getType() != 1){
+                if (afterLiked != 1){
                     redisService.unlockLua(redisLockEntity);
                     throw new ApiException("点赞类型错误");
                 }
-                redisService.hSet(articleLikedKey,String.valueOf(user.getId()),1);
+                redisService.hSet(articleLikedKey,String.valueOf(userId),1);
             }
+            // 文章点赞数量修改
+            if (redisService.hHasKey(RedisConstant.ARTICLE_LIKED_COUNT,String.valueOf(articleId))){
+                redisService.hIncr(RedisConstant.ARTICLE_LIKED_COUNT,String.valueOf(articleId),afterLiked.longValue());
+            }else {
+                redisService.hSet(RedisConstant.ARTICLE_LIKED_COUNT,String.valueOf(articleId),1);
+            }
+            // 用户点赞数量修改
+            if (redisService.hHasKey(RedisConstant.USER_LIKED_COUNT,String.valueOf(likedUserId))){
+                redisService.hIncr(RedisConstant.USER_LIKED_COUNT,String.valueOf(likedUserId),afterLiked.longValue());
+            }else {
+                redisService.hSet(RedisConstant.USER_LIKED_COUNT,String.valueOf(likedUserId),1);
+            }
+
             redisService.unlockLua(redisLockEntity);
-            // 数据库修改点赞数量
-            article.setLikes(article.getLikes()+param.getType());
-            article.setCreateTime(null);
-            article.setUpdateTime(null);
-            articleDao.updateByPrimaryKeySelective(article);
             return true;
         }else {
             return false;

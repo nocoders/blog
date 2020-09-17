@@ -12,5 +12,15 @@ public class RedisConstant {
     public static final String ARTICLE_USER_LIKED = "ARTICLE_USER_LIKED:%s";
     /**  用户点赞锁  */
     public static final String ARTICLE_USER_LIKED_LOCK = "ARTICLE_USER_LIKED_LOCK:%s:%s";
-    public static final String ARTICLE_LIKED_LOCK = "ARTICLE_LIKED_LOCK:%s";
+    /** 文章点赞数 */
+    public static final String ARTICLE_LIKED_COUNT = "ARTICLE_LIKED_COUNT";
+    /** 用户总点赞数 */
+    public static final String USER_LIKED_COUNT = "USER_LIKED_COUNT";
+    /** 用户收藏锁 */
+    public static final String ARTICLE_USER_COMMENT_LOCK = "ARTICLE_USER_COMMENT_LOCK:%s:%s";
+    /** 文章评论数量 */
+    public static final String USER_ARTICLE_COMMENT_COUNT = "ARTICLE_COMMENT_COUNT:%s";
+    /** 用户评论总数量 */
+    public static final String USER_COMMENT_COUNT = "USER_COMMENT_COUNT";
+
 }

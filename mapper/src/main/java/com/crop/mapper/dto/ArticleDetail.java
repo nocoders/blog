@@ -4,6 +4,7 @@ import com.crop.mapper.model.CArticle;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * 文章详情
@@ -11,6 +12,7 @@ import lombok.Data;
  * @version 1.0
  * @date 25/8/2020 下午3:41
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
 @ApiModel(value = "文章详情")
 public class ArticleDetail extends CArticle {

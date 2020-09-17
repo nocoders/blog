@@ -35,14 +35,39 @@ public class RedisKeyUtil {
     }
 
     /**
-     * 获取文章点赞加锁 key
-     * @param articleId
+     * 获取用户点赞 key
+     * @param userId 用户id
      * @author linmeng
      * @date 9/9/2020 下午2:43
      * @return java.lang.String
      */
-    public static String getArticleLikeLockKey(Long articleId){
+    public static String getUserLikeKey(Long userId){
 
-        return String.format(RedisConstant.ARTICLE_LIKED_LOCK,articleId);
+        return String.format(RedisConstant.USER_LIKED_COUNT,userId);
+    }
+
+    /**
+     * 获取用户评论锁
+     * @param articleId 文章id
+     * @param userId 用户id
+     * @author linmeng
+     * @date 16/9/2020 下午5:15
+     * @return java.lang.String
+     */
+    public static String getArticleUserCommentLock(Long articleId,Long userId){
+
+        return String.format(RedisConstant.ARTICLE_USER_COMMENT_LOCK,articleId,userId);
+    }
+
+    /**
+     * 获取用户文章评论数量  key
+     * @param userId 用户id,是文章作者的userId
+     * @author linmeng
+     * @date 16/9/2020 下午4:59
+     * @return java.lang.String
+     */
+    public static String getUserArticleCommentKey(Long userId){
+
+        return String.format(RedisConstant.USER_ARTICLE_COMMENT_COUNT,userId);
     }
 }

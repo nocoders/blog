@@ -47,7 +47,7 @@ public class ArticleLikedPersistentTask {
      * @date 6/9/2020 下午11:33 
      * @return void
      */
-    @Scheduled(cron = "0 0 4 * * ?")
+//    @Scheduled(cron = "0 0 4 * * ?")
     private void articleLikedPersistent(){
         // 查询已发布文章id
         List<Long> distributeArticleIds = articleDao.getDistributeArticleIds();
@@ -76,7 +76,6 @@ public class ArticleLikedPersistentTask {
                 }
             }
             CArticle article = new CArticle();
-            article.setComments(totalCount);
             article.setId(a);
             articleDao.updateByPrimaryKeySelective(article);
 

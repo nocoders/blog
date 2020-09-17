@@ -21,6 +21,10 @@ public class CArticleCollections implements Serializable {
     @Length(max = 64, message = "文章名称名长度最长为64")
     private String articleName;
 
+    @ApiModelProperty(value="作者",name="author")
+    @Length(max = 64, message = "作者名长度最长为64")
+    private String author;
+
     @ApiModelProperty(value="收藏类型，0-博客，暂定只有一种类型",name="type")
     private Integer type;
 
@@ -49,6 +53,7 @@ public class CArticleCollections implements Serializable {
         sb.append(", id=").append(id);
         sb.append(", articleId=").append(articleId);
         sb.append(", articleName=").append(articleName);
+        sb.append(", author=").append(author);
         sb.append(", type=").append(type);
         sb.append(", userId=").append(userId);
         sb.append(", folderId=").append(folderId);
