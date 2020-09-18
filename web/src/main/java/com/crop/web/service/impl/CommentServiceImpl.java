@@ -56,10 +56,30 @@ public class CommentServiceImpl implements CommentService {
         // 检查文章是否发布
         Long articleId = param.getArticleId();
         CArticle article = articleDao.selectByPrimaryKey(articleId);
-        if (null == article || 0 == article.getStatus()){
+        if (null == article || 1 == article.getStatus()){
             throw new ApiException("文章未发布，不能点赞。");
         }
         Long userId = article.getUserId();
+        commentCountIncrement(userId,articleId);
+        
+        CArticleComments comments = new CArticleComments();
+        comments.setArticleId(articleId);
+        comments.setFromUid(user.getId());
+        comments.setContent(param.getContent());
+        commentsMapper.insertSelective(comments);
+
+        return comments.getId();
+    }
+
+    /**
+     * redis中统计文章点赞的数量
+     * @param userId
+     * @param articleId
+     * @author linmeng
+     * @date 17/9/2020 上午9:55
+     * @return void
+     */
+    public void commentCountIncrement(Long userId,Long articleId){
         String userArticleCommentKey = RedisKeyUtil.getUserArticleCommentKey(userId);
         if (redisService.hHasKey(userArticleCommentKey,String.valueOf(articleId))){
             redisService.hIncr(userArticleCommentKey,String.valueOf(articleId),1L);
@@ -71,14 +91,6 @@ public class CommentServiceImpl implements CommentService {
         }else {
             redisService.hSet(RedisConstant.USER_COMMENT_COUNT,String.valueOf(userId),1);
         }
-        
-        CArticleComments comments = new CArticleComments();
-        comments.setArticleId(articleId);
-        comments.setFromUid(userId);
-        comments.setContent(param.getContent());
-        commentsMapper.insertSelective(comments);
-
-        return comments.getId();
     }
 
     /**
@@ -100,12 +112,15 @@ public class CommentServiceImpl implements CommentService {
         if (Objects.isNull(originalComment)){
             throw new ApiException("找不到原始评论");
         }
+        param.setToUid(originalComment.getFromUid());
         if (param.getReplyType() == 1){
             CArticleCommentReply commentReply = replyMapper.selectByPrimaryKey(param.getReplyId());
             if (Objects.isNull(commentReply) || !commentReply.getFromUid().equals(param.getToUid())){
                 throw new ApiException("找不到回复评论或被回复用户id错误");
             }
+            param.setToUid(commentReply.getFromUid());
         }
+        commentCountIncrement(originalComment.getArticleId(),user.getId());
         CArticleCommentReply cArticleCommentReply = new CArticleCommentReply();
         BeanUtils.copyProperties(param,cArticleCommentReply);
         cArticleCommentReply.setFromUid(user.getId());

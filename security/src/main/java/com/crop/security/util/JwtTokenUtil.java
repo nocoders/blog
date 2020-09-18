@@ -97,7 +97,7 @@ public class JwtTokenUtil {
      * @date 3/9/2020 上午11:15
      * @return boolean
      */
-    private boolean isTokenExpired(String token) {
+    public boolean isTokenExpired(String token) {
         Date expiredDate = getExpiredDateFromToken(token);
         return expiredDate.before(new Date());
     }

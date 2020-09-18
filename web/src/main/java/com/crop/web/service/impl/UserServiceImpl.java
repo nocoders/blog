@@ -7,6 +7,7 @@ import com.crop.mapper.model.CUser;
 import com.crop.mapper.model.CUserExample;
 import com.crop.security.util.JwtTokenUtil;
 import com.crop.mapper.dto.UserDetail;
+import com.crop.web.service.UserCacheService;
 import com.crop.web.service.UserService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -46,6 +47,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private JwtTokenUtil tokenUtil;
+
+    @Autowired
+    private UserCacheService userCacheService;
 
     @Override
     public CUser register(UserReq userReq) {
@@ -95,7 +99,6 @@ public class UserServiceImpl implements UserService {
 
     /**
      * 从request里面拿到token，从token中拿到username，根据username去数据库查询用户信息
-     * @param request 前端请求
      * @author linmeng
      * @date 25/8/2020 上午11:29
      * @return com.crop.mapper.model.CUser
@@ -105,9 +108,22 @@ public class UserServiceImpl implements UserService {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         String header = request.getHeader(this.tokenHeader);
         if (StringUtils.isNotBlank(header) && header.startsWith(this.tokenHead)){
-            String username = tokenUtil.getUserNameFromToken(header.substring(this.tokenHead.length()));
+            String token = header.substring(this.tokenHead.length());
+            if (tokenUtil.isTokenExpired(token)){
+                return null;
+            }
+            String username = tokenUtil.getUserNameFromToken(token);
+            //
             if (StringUtils.isNotBlank(username)){
-                return userDao.getUserByUserName(username);
+                CUser user = userCacheService.getUser(username);
+                if (user!=null){
+                    return user;
+                }
+                user = userDao.getUserByUserName(username);
+                if (user!=null){
+                    userCacheService.setUser(user);
+                }
+                return user;
             }
         }
 
@@ -126,6 +142,7 @@ public class UserServiceImpl implements UserService {
         if (StringUtils.isNotBlank(token) && token.startsWith(this.tokenHead)){
             String username = tokenUtil.getUserNameFromToken(token.substring(this.tokenHead.length()));
             if (StringUtils.isNotBlank(username)){
+
                 return userDao.getUserByUserName(username);
             }
         }
@@ -149,5 +166,11 @@ public class UserServiceImpl implements UserService {
         }
 
         return null;
+    }
+
+    @Override
+    public CUser getUserById(Long userId) {
+
+        return userDao.selectByPrimaryKey(userId);
     }
 }

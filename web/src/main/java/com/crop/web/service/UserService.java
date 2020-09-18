@@ -20,4 +20,6 @@ public interface UserService {
     CUser getUserFromToken(String token);
 
     UserDetails loadUserByUsername(String username);
+
+    CUser getUserById(Long userId);
 }

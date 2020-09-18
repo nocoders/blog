@@ -32,7 +32,7 @@ jwt:
 redis:
   database: blog
   key:
-    admin: 'web:user'
+    user: 'web:user'
     resourceList: 'web:resourceList'
   expire:
     common: 86400 # 24小时

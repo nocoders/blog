@@ -40,7 +40,7 @@ public class ArticleUpdateReq {
 
     @ApiModelProperty(value = "状态，1-草稿，0-发布")
     @NotNull(message = "状态不能为空，必须为草稿或发布")
-    private Boolean status;
+    private Integer status;
 
     @ApiModelProperty(value = "文章内容")
     @NotBlank(message = "文章内容不能为空")
