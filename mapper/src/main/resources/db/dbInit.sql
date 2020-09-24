@@ -144,3 +144,19 @@ create table c_article_collections_folder
     update_time          timestamp default CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     primary key (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='文章收藏文件夹';
+
+-- 根据文章回复id，查询该回复下面的所有回复id
+DROP FUNCTION IF EXISTS getCommentReplyIds;
+CREATE FUNCTION getCommentReplyIds(commentId varchar(4000)) RETURNS varchar(4000)
+BEGIN
+    DECLARE cTmp VARCHAR(4000);
+    DECLARE cTmpChild VARCHAR(4000);
+    SET cTmp = '';
+    SET cTmpChild = CAST(commentId AS CHAR);
+    WHILE cTmpChild IS NOT NULL
+        DO
+            SET cTmp = CONCAT(cTmp,',',cTmpChild);
+            SELECT GROUP_CONCAT(id) INTO cTmpChild FROM c_article_comment_reply WHERE FIND_IN_SET(reply_id,cTmpChild)>0;
+        END WHILE;
+    RETURN cTmp;
+END

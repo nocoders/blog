@@ -8,4 +8,8 @@ public interface CommentService {
     Long comment(CommentReq param, CUser user);
 
     Long reply(CommentReplyParam param, CUser user);
+
+    void commentDelete(Long id);
+
+    Integer commentReplyDelete(Long id);
 }

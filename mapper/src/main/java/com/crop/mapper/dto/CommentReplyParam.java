@@ -10,6 +10,8 @@ import javax.validation.constraints.NotNull;
 
 /**
  * 评论回复前端传递参数
+ * 针对评论回复时，type为0，只有根评论id，没有回复id
+ * 针对回复回复时，type为1，有根评论id，也有回复id
  * @author linmeng
  * @version 1.0
  * @date 11/9/2020 上午9:29
@@ -17,13 +19,11 @@ import javax.validation.constraints.NotNull;
 @Data
 public class CommentReplyParam {
 
-    /** 针对评论回复时，根评论id跟回复id相同，针对回复回复时两者不同 */
     @ApiModelProperty(value="根评论id",name="commentId")
     @NotNull(message = "评论id不能为空")
     private Long commentId;
 
     @ApiModelProperty(value="回复id，针对该评论回复的上一条评论或回复",name="replyId")
-    @NotNull(message = "回复id不能为空")
     private Long replyId;
 
     @ApiModelProperty(value="回复类型，0：针对评论回复，1：针对回复回复",name="replyType")

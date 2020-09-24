@@ -5,20 +5,18 @@ import com.crop.common.exception.ApiException;
 import com.crop.common.service.impl.RedisServiceImpl;
 import com.crop.common.util.RedisKeyUtil;
 import com.crop.mapper.dao.ArticleDao;
+import com.crop.mapper.dao.ReplyDao;
 import com.crop.mapper.dto.CommentReq;
 import com.crop.mapper.dto.CommentReplyParam;
-import com.crop.mapper.mapper.CArticleCommentReplyMapper;
 import com.crop.mapper.mapper.CArticleCommentsMapper;
-import com.crop.mapper.model.CArticle;
-import com.crop.mapper.model.CArticleCommentReply;
-import com.crop.mapper.model.CArticleComments;
-import com.crop.mapper.model.CUser;
+import com.crop.mapper.model.*;
 import com.crop.web.service.CommentService;
+import com.crop.web.service.UserService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 /**
@@ -38,10 +36,13 @@ public class CommentServiceImpl implements CommentService {
     private CArticleCommentsMapper commentsMapper;
     
     @Autowired
-    private CArticleCommentReplyMapper replyMapper;
+    private ReplyDao replyDao;
 
     @Autowired
     private RedisServiceImpl redisService;
+
+    @Autowired
+    private UserService userService;
 
     /**
      * 对文章进行评论
@@ -72,7 +73,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     /**
-     * redis中统计文章点赞的数量
+     * redis中统计文章评论的数量
      * @param userId
      * @param articleId
      * @author linmeng
@@ -103,20 +104,15 @@ public class CommentServiceImpl implements CommentService {
      */
     @Override
     public Long reply(CommentReplyParam param, CUser user) {
-        if (param.getReplyType() == 0){
-            if (!param.getCommentId().equals(param.getReplyId())){
-                throw new ApiException("参数错误");
-            }
-        }
         CArticleComments originalComment = commentsMapper.selectByPrimaryKey(param.getCommentId());
         if (Objects.isNull(originalComment)){
             throw new ApiException("找不到原始评论");
         }
         param.setToUid(originalComment.getFromUid());
         if (param.getReplyType() == 1){
-            CArticleCommentReply commentReply = replyMapper.selectByPrimaryKey(param.getReplyId());
-            if (Objects.isNull(commentReply) || !commentReply.getFromUid().equals(param.getToUid())){
-                throw new ApiException("找不到回复评论或被回复用户id错误");
+            CArticleCommentReply commentReply = replyDao.selectByPrimaryKey(param.getReplyId());
+            if (Objects.isNull(commentReply)){
+                throw new ApiException("找不到回复评论");
             }
             param.setToUid(commentReply.getFromUid());
         }
@@ -124,8 +120,70 @@ public class CommentServiceImpl implements CommentService {
         CArticleCommentReply cArticleCommentReply = new CArticleCommentReply();
         BeanUtils.copyProperties(param,cArticleCommentReply);
         cArticleCommentReply.setFromUid(user.getId());
-        replyMapper.insertSelective(cArticleCommentReply);
+        replyDao.insertSelective(cArticleCommentReply);
 
         return cArticleCommentReply.getId();
+    }
+
+    /**
+     * 根据评论id删除相关评论回复，第一，登录用户是作者 可删除，第二，登录用户是该条评论的主人可删除
+     * @param id
+     * @author linmeng
+     * @date 22/9/2020 上午10:11
+     * @return boolean
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void commentDelete(Long id) {
+
+        CArticleComments comments = commentsMapper.selectByPrimaryKey(id);
+        if (comments==null){
+            throw new ApiException("找不到评论信息");
+        }
+        CUser user = userService.getUserFromRequest();
+        CArticle article = articleDao.selectByPrimaryKey(comments.getArticleId());
+        if (article==null){
+            throw new ApiException("文章未发布或已删除");
+        }
+        if (!user.getId().equals(comments.getFromUid()) && !user.getId().equals(article.getUserId())){
+            throw new ApiException("用户无权限删除该评论");
+        }
+        commentsMapper.deleteByPrimaryKey(id);
+        CArticleCommentReplyExample replyExample = new CArticleCommentReplyExample();
+        replyExample.createCriteria().andCommentIdEqualTo(id);
+        replyDao.deleteByExample(replyExample);
+    }
+
+    /**
+     * 根据传递的回复id删除下面的所有回复
+     *  登录用户若为当前文章作者或登录用户是发表回复用户的话,可任意删除。若，
+     * @param id
+     * @author linmeng
+     * @date 22/9/2020 下午5:03
+     * @return void
+     */
+    @Override
+    public Integer commentReplyDelete(Long id) {
+        // 检查传入回复信息是否存在
+        CArticleCommentReply commentReply = replyDao.selectByPrimaryKey(id);
+        if (commentReply==null){
+            throw new ApiException("传递回复id不存在或已删除");
+        }
+        CArticleComments comments = commentsMapper.selectByPrimaryKey(commentReply.getCommentId());
+        if (comments==null){
+            throw new ApiException("回复id所在评论不存在");
+        }
+        CArticle article = articleDao.selectByPrimaryKey(comments.getArticleId());
+        if (article==null){
+            throw new ApiException("回复所在文章不存在");
+        }
+        // 检查登录用户是否为当前用户或该条回复作者
+        CUser user = userService.getUserFromRequest();
+        if (!user.getId().equals(commentReply.getFromUid()) && !user.getId().equals(article.getUserId())){
+            throw new ApiException("用户无权限删除该回复");
+        }
+        String replyIdStr = replyDao.getReplyIdTree(id);
+
+        return replyDao.batchDelete(replyIdStr.substring(1));
     }
 }

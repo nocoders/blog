@@ -12,10 +12,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  *
@@ -54,11 +51,25 @@ public class CommentController {
     public CommonResult<IdBean> commentReply(@RequestBody @Validated CommentReplyParam param){
         // 获取用户信息
         CUser user = userService.getUserFromRequest();
-        if (user == null){
-            return CommonResult.unauthorized(null);
-        }
         Long replyId = commentService.reply(param,user);
 
         return  replyId == null ? CommonResult.failed():CommonResult.success(new IdBean(replyId));
+    }
+
+    @DeleteMapping("/comment/{id}")
+    @ApiOperation("评论删除，根据评论id 删除评论和该评论下的回复")
+    public CommonResult commentDelete(@PathVariable("id") Long id){
+        commentService.commentDelete(id);
+
+        return CommonResult.success();
+    }
+
+    @DeleteMapping("/comment/reply/{id}")
+    @ApiOperation("评论删除，根据评论id 删除评论和该评论下的回复")
+    public CommonResult commentReplyDelete(@PathVariable("id") Long id){
+
+        Integer deleteCount = commentService.commentReplyDelete(id);
+
+        return deleteCount>0 ? CommonResult.success():CommonResult.failed();
     }
 }

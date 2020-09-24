@@ -113,7 +113,6 @@ public class UserServiceImpl implements UserService {
                 return null;
             }
             String username = tokenUtil.getUserNameFromToken(token);
-            //
             if (StringUtils.isNotBlank(username)){
                 CUser user = userCacheService.getUser(username);
                 if (user!=null){
