@@ -61,7 +61,7 @@ public class CommentServiceImpl implements CommentService {
             throw new ApiException("文章未发布，不能点赞。");
         }
         Long userId = article.getUserId();
-        commentCountIncrement(userId,articleId);
+        commentCountModify(userId,articleId,1L,true);
         
         CArticleComments comments = new CArticleComments();
         comments.setArticleId(articleId);
@@ -94,6 +94,27 @@ public class CommentServiceImpl implements CommentService {
         }
     }
 
+    public void commentCountModify(Long userId,Long articleId,Long modifyCount,boolean isIncrement){
+        String userArticleCommentKey = RedisKeyUtil.getUserArticleCommentKey(userId);
+        if (isIncrement){
+            if (redisService.hHasKey(userArticleCommentKey,String.valueOf(articleId))){
+                redisService.hIncr(userArticleCommentKey,String.valueOf(articleId),modifyCount);
+            }else {
+                redisService.hSet(userArticleCommentKey,String.valueOf(articleId),1);
+            }
+            if (redisService.hHasKey(RedisConstant.USER_COMMENT_COUNT,String.valueOf(userId))){
+                redisService.hIncr(RedisConstant.USER_COMMENT_COUNT,String.valueOf(userId),1L);
+            }else {
+                redisService.hSet(RedisConstant.USER_COMMENT_COUNT,String.valueOf(userId),modifyCount);
+            }
+        }else {
+            redisService.hDecr(userArticleCommentKey,String.valueOf(articleId),modifyCount);
+            redisService.hDecr(RedisConstant.USER_COMMENT_COUNT,String.valueOf(userId),1L);
+
+        }
+
+    }
+
     /**
      * 对评论进行回复或对回复进行回复
      * @param param 回复信息
@@ -116,7 +137,7 @@ public class CommentServiceImpl implements CommentService {
             }
             param.setToUid(commentReply.getFromUid());
         }
-        commentCountIncrement(originalComment.getArticleId(),user.getId());
+        commentCountModify(originalComment.getArticleId(),user.getId(),1L,true);
         CArticleCommentReply cArticleCommentReply = new CArticleCommentReply();
         BeanUtils.copyProperties(param,cArticleCommentReply);
         cArticleCommentReply.setFromUid(user.getId());
@@ -148,10 +169,11 @@ public class CommentServiceImpl implements CommentService {
         if (!user.getId().equals(comments.getFromUid()) && !user.getId().equals(article.getUserId())){
             throw new ApiException("用户无权限删除该评论");
         }
-        commentsMapper.deleteByPrimaryKey(id);
+        int commentDeleteCount = commentsMapper.deleteByPrimaryKey(id);
         CArticleCommentReplyExample replyExample = new CArticleCommentReplyExample();
         replyExample.createCriteria().andCommentIdEqualTo(id);
-        replyDao.deleteByExample(replyExample);
+        int replyDeleteCount = replyDao.deleteByExample(replyExample);
+        commentCountModify(article.getId(),user.getId(), (long) (commentDeleteCount + replyDeleteCount),false);
     }
 
     /**
@@ -183,7 +205,9 @@ public class CommentServiceImpl implements CommentService {
             throw new ApiException("用户无权限删除该回复");
         }
         String replyIdStr = replyDao.getReplyIdTree(id);
+        int deleteCount = replyDao.batchDelete(replyIdStr.substring(1));
+        commentCountModify(article.getId(),user.getId(), (long) deleteCount,false);
 
-        return replyDao.batchDelete(replyIdStr.substring(1));
+        return deleteCount;
     }
 }
