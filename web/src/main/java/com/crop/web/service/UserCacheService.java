@@ -1,6 +1,6 @@
 package com.crop.web.service;
 
-import com.crop.mapper.model.CUser;
+import com.crop.mbg.model.CUser;
 
 public interface UserCacheService {
 

@@ -1,16 +1,16 @@
 package com.crop.web.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
-import com.crop.mapper.dao.ArticleDao;
-import com.crop.mapper.dto.ArticleUpdateReq;
-import com.crop.mapper.dto.ArticleDetail;
-import com.crop.mapper.dto.ArticlePageParam;
-import com.crop.mapper.dto.PageBean;
-import com.crop.mapper.mapper.CArticleContentMapper;
-import com.crop.mapper.model.CArticle;
-import com.crop.mapper.model.CArticleContent;
-import com.crop.mapper.model.CArticleExample;
-import com.crop.mapper.model.CUser;
+import com.crop.web.dao.ArticleDao;
+import com.crop.web.dto.ArticleUpdateReq;
+import com.crop.web.dto.ArticleDetail;
+import com.crop.web.dto.ArticlePageParam;
+import com.crop.web.dto.PageBean;
+import com.crop.mbg.mapper.CArticleContentMapper;
+import com.crop.mbg.model.CArticle;
+import com.crop.mbg.model.CArticleContent;
+import com.crop.mbg.model.CArticleExample;
+import com.crop.mbg.model.CUser;
 import com.crop.web.service.ArticleService;
 import com.github.pagehelper.PageHelper;
 import org.apache.commons.lang3.StringUtils;

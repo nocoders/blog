@@ -1,7 +1,7 @@
 package com.crop.web.controller;
 
 import com.crop.common.api.CommonResult;
-import com.crop.mapper.dto.LikeReq;
+import com.crop.web.dto.LikeReq;
 import com.crop.web.service.LikeService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

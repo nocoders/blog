@@ -22,7 +22,7 @@
         <!--本地包依赖 start-->
         <dependency>
             <groupId>com.crop</groupId>
-            <artifactId>mapper</artifactId>
+            <artifactId>mbg</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>

@@ -1,10 +1,10 @@
 package com.crop.web.controller;
 
 import com.crop.common.api.CommonResult;
-import com.crop.mapper.dto.CommentReq;
-import com.crop.mapper.dto.CommentReplyParam;
-import com.crop.mapper.dto.IdBean;
-import com.crop.mapper.model.CUser;
+import com.crop.web.dto.CommentReq;
+import com.crop.web.dto.CommentReplyParam;
+import com.crop.web.dto.IdBean;
+import com.crop.mbg.model.CUser;
 import com.crop.web.service.CommentService;
 import com.crop.web.service.UserService;
 import io.swagger.annotations.Api;

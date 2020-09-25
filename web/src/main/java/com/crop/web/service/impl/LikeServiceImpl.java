@@ -5,12 +5,11 @@ import com.crop.common.api.RedisLockEntity;
 import com.crop.common.exception.ApiException;
 import com.crop.common.service.impl.RedisServiceImpl;
 import com.crop.common.util.RedisKeyUtil;
-import com.crop.mapper.dao.ArticleDao;
-import com.crop.mapper.dto.LikeReq;
-import com.crop.mapper.mapper.CArticleLikesMapper;
-import com.crop.mapper.model.CArticle;
-import com.crop.mapper.model.CArticleLikes;
-import com.crop.mapper.model.CUser;
+import com.crop.web.dao.ArticleDao;
+import com.crop.web.dto.LikeReq;
+import com.crop.mbg.mapper.CArticleLikesMapper;
+import com.crop.mbg.model.CArticle;
+import com.crop.mbg.model.CUser;
 import com.crop.web.service.LikeService;
 import com.crop.web.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +18,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.constraints.NotNull;
 
 /**
  * 点赞相关service

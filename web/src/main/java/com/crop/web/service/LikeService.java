@@ -1,6 +1,6 @@
 package com.crop.web.service;
 
-import com.crop.mapper.dto.LikeReq;
+import com.crop.web.dto.LikeReq;
 
 import javax.servlet.http.HttpServletRequest;
 

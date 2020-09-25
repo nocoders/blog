@@ -1,12 +1,12 @@
 package com.crop.web.service.impl;
 
 import com.crop.common.exception.Asserts;
-import com.crop.mapper.dao.UserDao;
-import com.crop.mapper.dto.UserReq;
-import com.crop.mapper.model.CUser;
-import com.crop.mapper.model.CUserExample;
+import com.crop.web.dao.UserDao;
+import com.crop.web.dto.UserReq;
+import com.crop.mbg.model.CUser;
+import com.crop.mbg.model.CUserExample;
 import com.crop.security.util.JwtTokenUtil;
-import com.crop.mapper.dto.UserDetail;
+import com.crop.web.dto.UserDetail;
 import com.crop.web.service.UserCacheService;
 import com.crop.web.service.UserService;
 import org.apache.commons.lang3.StringUtils;

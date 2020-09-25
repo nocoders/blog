@@ -2,12 +2,11 @@ package com.crop.web.service.impl;
 
 import com.crop.common.api.ResultCode;
 import com.crop.common.exception.ApiException;
-import com.crop.mapper.dao.ArticleDao;
-import com.crop.mapper.dao.CollectionFolderDao;
-import com.crop.mapper.dto.CollectionFolderReq;
-import com.crop.mapper.dto.CollectorReq;
-import com.crop.mapper.mapper.CArticleCollectionsFolderMapper;
-import com.crop.mapper.model.*;
+import com.crop.web.dao.ArticleDao;
+import com.crop.web.dao.CollectionFolderDao;
+import com.crop.web.dto.CollectionFolderReq;
+import com.crop.web.dto.CollectorReq;
+import com.crop.mbg.model.*;
 import com.crop.web.service.CollectionService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,7 +1,7 @@
 package com.crop.web.service.impl;
 
 import com.crop.common.service.impl.RedisServiceImpl;
-import com.crop.mapper.model.CUser;
+import com.crop.mbg.model.CUser;
 import com.crop.web.service.UserCacheService;
 import com.crop.web.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

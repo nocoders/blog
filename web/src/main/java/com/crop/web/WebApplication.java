@@ -11,7 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @SpringBootApplication
-@MapperScan({"com.crop.mapper.mapper","com.crop.mapper.dao"})
+@MapperScan({"com.crop.mbg.mapper","com.crop.web.dao"})
 @ComponentScan(basePackages = {"com.crop"})
 public class WebApplication {
 

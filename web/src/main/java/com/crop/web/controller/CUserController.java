@@ -2,8 +2,8 @@ package com.crop.web.controller;
 
 import com.crop.common.api.CommonResult;
 import com.crop.common.api.ResultCode;
-import com.crop.mapper.dto.UserReq;
-import com.crop.mapper.model.CUser;
+import com.crop.web.dto.UserReq;
+import com.crop.mbg.model.CUser;
 import com.crop.web.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

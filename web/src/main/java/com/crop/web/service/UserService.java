@@ -1,7 +1,7 @@
 package com.crop.web.service;
 
-import com.crop.mapper.dto.UserReq;
-import com.crop.mapper.model.CUser;
+import com.crop.mbg.model.CUser;
+import com.crop.web.dto.UserReq;
 import org.springframework.security.core.userdetails.UserDetails;
 
 /**

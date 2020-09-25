@@ -2,11 +2,11 @@ package com.crop.web.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.crop.common.api.CommonResult;
-import com.crop.mapper.dto.CollectionFolderReq;
-import com.crop.mapper.dto.CollectorReq;
-import com.crop.mapper.dto.IdBean;
-import com.crop.mapper.model.CArticleCollectionsFolder;
-import com.crop.mapper.model.CUser;
+import com.crop.web.dto.CollectionFolderReq;
+import com.crop.web.dto.CollectorReq;
+import com.crop.web.dto.IdBean;
+import com.crop.mbg.model.CArticleCollectionsFolder;
+import com.crop.mbg.model.CUser;
 import com.crop.web.service.CollectionService;
 import com.crop.web.service.UserService;
 import io.swagger.annotations.Api;
