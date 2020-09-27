@@ -1,8 +1,12 @@
 package com.crop.web.service.impl;
 
+import com.crop.common.api.RedisConstant;
 import com.crop.common.api.ResultCode;
 import com.crop.common.exception.ApiException;
+import com.crop.common.service.impl.RedisServiceImpl;
+import com.crop.common.util.RedisKeyUtil;
 import com.crop.web.dao.ArticleDao;
+import com.crop.web.dao.CollectionDao;
 import com.crop.web.dao.CollectionFolderDao;
 import com.crop.web.dto.CollectionFolderReq;
 import com.crop.web.dto.CollectorReq;
@@ -28,8 +32,13 @@ public class CollectionServiceImpl implements CollectionService {
     private CollectionFolderDao collectionFolderDao;
 
     @Autowired
+    private CollectionDao collectionDao;
+
+    @Autowired
     private ArticleDao articleDao;
 
+    @Autowired
+    private RedisServiceImpl redisService;
     /**
      * 收藏文件夹创建
      * @param req 前端传递参数
@@ -80,15 +89,31 @@ public class CollectionServiceImpl implements CollectionService {
     public Long collect(CollectorReq req,Long userId) {
         // 检查文章，收藏文件夹是否存在
         CArticle article = articleDao.selectByPrimaryKey(req.getArticleId());
-        if (article==null){
+        if (article==null || article.getDeleted()!=0){
             throw new ApiException(ResultCode.BAD_REQUEST);
         }
         CArticleCollectionsFolder collectionsFolder = collectionFolderDao.selectByPrimaryKey(req.getFolderId());
         if (collectionsFolder==null){
             throw new ApiException(ResultCode.BAD_REQUEST);
         }
-        CArticleCollections cArticleCollections = new CArticleCollections();
+        CArticleCollections articleCollections = new CArticleCollections();
+        BeanUtils.copyProperties(req,articleCollections);
+        articleCollections.setUserId(userId);
+        collectionDao.insertSelective(articleCollections);
+        Long authorId = article.getUserId();
+        String userArticleCollectKey = RedisKeyUtil.getUserArticleCollectKey(authorId);
+        String articleId = String.valueOf(article.getId());
+        if (redisService.hHasKey(userArticleCollectKey, articleId)){
+            redisService.hIncr(userArticleCollectKey, articleId,1L);
+        }else {
+            redisService.hSet(userArticleCollectKey, articleId,1L);
+        }
+        if (redisService.hHasKey(RedisConstant.USER_COLLECTION_COUNT, String.valueOf(authorId))){
+            redisService.hIncr(RedisConstant.USER_COLLECTION_COUNT, articleId,1L);
+        }else {
+            redisService.hSet(RedisConstant.USER_COLLECTION_COUNT, articleId,1L);
+        }
 
-        return null;
+        return articleCollections.getId();
     }
 }

@@ -70,4 +70,15 @@ public class RedisKeyUtil {
 
         return String.format(RedisConstant.USER_ARTICLE_COMMENT_COUNT,userId);
     }
+    /**
+     * 获取用户文章收藏key
+     * @param userId 用户id
+     * @author linmeng
+     * @date 27/9/2020 上午10:33
+     * @return java.lang.String
+     */
+    public static String getUserArticleCollectKey(Long userId){
+
+        return String.format(RedisConstant.USER_ARTICLE_COLLECTION_COUNT,userId);
+    }
 }

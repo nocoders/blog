@@ -22,5 +22,9 @@ public class RedisConstant {
     public static final String USER_ARTICLE_COMMENT_COUNT = "ARTICLE_COMMENT_COUNT:%s";
     /** 用户评论总数量 */
     public static final String USER_COMMENT_COUNT = "USER_COMMENT_COUNT";
+    /** 文章收藏数量 */
+    public static final String USER_ARTICLE_COLLECTION_COUNT = "ARTICLE_COLLECTION_COUNT:%s";
+    /** 用户收藏总数量 */
+    public static final String USER_COLLECTION_COUNT = "USER_COLLECTION_COUNT";
 
 }

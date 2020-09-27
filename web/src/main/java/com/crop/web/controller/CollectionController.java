@@ -39,7 +39,7 @@ public class CollectionController {
     @Autowired
     private UserService userService;
 
-    @PostMapping({"/folder/create"})
+    @PostMapping({"/folder"})
     @ApiOperation("收藏文件夹创建")
     public CommonResult<IdBean> folderCreate(@RequestBody @Validated CollectionFolderReq req){
         log.info("前端传递文件夹创建参数:"+ JSON.toJSONString(req));
@@ -66,7 +66,7 @@ public class CollectionController {
         return list.isEmpty() ? CommonResult.failed():CommonResult.success(list);
     }
 
-    @PostMapping({"/collect"})
+    @PostMapping
     @ApiOperation("文章收藏")
     public CommonResult collect(@RequestBody @Validated CollectorReq req){
         // 获取用户信息

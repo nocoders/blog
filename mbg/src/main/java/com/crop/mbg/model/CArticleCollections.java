@@ -21,10 +21,6 @@ public class CArticleCollections implements Serializable {
     @Length(max = 64, message = "文章名称名长度最长为64")
     private String articleName;
 
-    @ApiModelProperty(value="作者",name="author")
-    @Length(max = 64, message = "作者名长度最长为64")
-    private String author;
-
     @ApiModelProperty(value="收藏类型，0-博客，暂定只有一种类型",name="type")
     private Integer type;
 
@@ -46,21 +42,19 @@ public class CArticleCollections implements Serializable {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
-        sb.append(", articleId=").append(articleId);
-        sb.append(", articleName=").append(articleName);
-        sb.append(", author=").append(author);
-        sb.append(", type=").append(type);
-        sb.append(", userId=").append(userId);
-        sb.append(", folderId=").append(folderId);
-        sb.append(", createTime=").append(createTime);
-        sb.append(", updateTime=").append(updateTime);
-        sb.append(", serialVersionUID=").append(serialVersionUID);
-        sb.append("]");
-        return sb.toString();
+        String sb = getClass().getSimpleName() +
+                " [" +
+                "Hash = " + hashCode() +
+                ", id=" + id +
+                ", articleId=" + articleId +
+                ", articleName=" + articleName +
+                ", type=" + type +
+                ", userId=" + userId +
+                ", folderId=" + folderId +
+                ", createTime=" + createTime +
+                ", updateTime=" + updateTime +
+                ", serialVersionUID=" + serialVersionUID +
+                "]";
+        return sb;
     }
 }
