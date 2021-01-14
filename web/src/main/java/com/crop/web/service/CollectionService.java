@@ -13,4 +13,6 @@ public interface CollectionService {
     List<CArticleCollectionsFolder> folderList(CUser user);
 
     Long collect(CollectorReq req,Long userId);
+
+    void collectDelete(Long id);
 }

@@ -94,6 +94,16 @@ public class CommentServiceImpl implements CommentService {
         }
     }
 
+    /**
+     * redis缓存中评论数量修改
+     * @param userId
+     * @param articleId
+     * @param modifyCount
+     * @param isIncrement
+     * @author linmeng
+     * @date 9/10/2020 上午11:32
+     * @return void
+     */
     public void commentCountModify(Long userId,Long articleId,Long modifyCount,boolean isIncrement){
         String userArticleCommentKey = RedisKeyUtil.getUserArticleCommentKey(userId);
         if (isIncrement){

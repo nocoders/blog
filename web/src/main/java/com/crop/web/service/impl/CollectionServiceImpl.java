@@ -5,12 +5,12 @@ import com.crop.common.api.ResultCode;
 import com.crop.common.exception.ApiException;
 import com.crop.common.service.impl.RedisServiceImpl;
 import com.crop.common.util.RedisKeyUtil;
+import com.crop.mbg.model.*;
 import com.crop.web.dao.ArticleDao;
 import com.crop.web.dao.CollectionDao;
 import com.crop.web.dao.CollectionFolderDao;
 import com.crop.web.dto.CollectionFolderReq;
 import com.crop.web.dto.CollectorReq;
-import com.crop.mbg.model.*;
 import com.crop.web.service.CollectionService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -115,5 +115,10 @@ public class CollectionServiceImpl implements CollectionService {
         }
 
         return articleCollections.getId();
+    }
+
+    @Override
+    public void collectDelete(Long id) {
+
     }
 }
