@@ -1,5 +1,7 @@
 package com.crop.web.controller;
 
+import cn.hutool.core.util.StrUtil;
+import cn.hutool.core.util.URLUtil;
 import com.crop.common.api.CommonResult;
 import com.crop.common.api.ResultCode;
 import com.crop.web.dto.UserReq;
@@ -13,6 +15,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URL;
 import java.util.HashMap;
 
 import static com.crop.common.api.CommonResult.success;

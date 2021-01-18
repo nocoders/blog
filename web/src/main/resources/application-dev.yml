@@ -36,3 +36,6 @@ logging:
   level:
     root: info
     com.crop: debug
+# 日志文件推送
+logstash:
+  host: localhost
