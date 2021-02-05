@@ -14,8 +14,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import java.util.Iterator;
-
 /**
  * TODO
  *
@@ -34,6 +32,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         //允许跨域请求的OPTIONS请求
         registry.antMatchers(HttpMethod.OPTIONS)
+                .permitAll()
+                .antMatchers("/**")//测试时全部运行访问
                 .permitAll();
         // 任何请求需要身份认证
         registry.and()
@@ -47,6 +47,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 // 自定义权限拒绝处理类
+
                 .and()
                 .exceptionHandling()
                 .accessDeniedHandler(restfulAccessDeniedHandler())
