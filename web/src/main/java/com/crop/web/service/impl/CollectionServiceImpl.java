@@ -3,7 +3,7 @@ package com.crop.web.service.impl;
 import com.crop.common.api.RedisConstant;
 import com.crop.common.api.ResultCode;
 import com.crop.common.exception.ApiException;
-import com.crop.common.service.impl.RedisServiceImpl;
+import com.crop.common.service.RedisService;
 import com.crop.common.util.RedisKeyUtil;
 import com.crop.mbg.model.*;
 import com.crop.web.dao.ArticleDao;
@@ -38,7 +38,7 @@ public class CollectionServiceImpl implements CollectionService {
     private ArticleDao articleDao;
 
     @Autowired
-    private RedisServiceImpl redisService;
+    private RedisService redisService;
     /**
      * 收藏文件夹创建
      * @param req 前端传递参数

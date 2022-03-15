@@ -1,6 +1,6 @@
 package com.crop.web.service.impl;
 
-import com.crop.common.service.impl.RedisServiceImpl;
+import com.crop.common.service.RedisService;
 import com.crop.mbg.model.CUser;
 import com.crop.web.service.UserCacheService;
 import com.crop.web.service.UserService;
@@ -24,7 +24,7 @@ public class UserCacheServiceImpl implements UserCacheService {
     private String REDIS_KEY_USER;
 
     @Autowired
-    private RedisServiceImpl redisService;
+    private RedisService redisService;
 
     private UserService userService;
 

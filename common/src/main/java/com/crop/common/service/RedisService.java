@@ -1,4 +1,4 @@
-package com.crop.common.service.impl;
+package com.crop.common.service;
 
 import com.crop.common.api.RedisLockEntity;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +20,7 @@ import java.util.concurrent.TimeUnit;
  */
 @Service
 @Slf4j
-public class RedisServiceImpl {
+public class RedisService {
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
 
