@@ -3,7 +3,7 @@ package com.crop.web.service.impl;
 import com.crop.common.api.RedisConstant;
 import com.crop.common.api.RedisLockEntity;
 import com.crop.common.exception.ApiException;
-import com.crop.common.service.impl.RedisServiceImpl;
+import com.crop.common.service.RedisService;
 import com.crop.common.util.RedisKeyUtil;
 import com.crop.web.dao.ArticleDao;
 import com.crop.web.dto.LikeReq;
@@ -35,7 +35,7 @@ public class LikeServiceImpl implements LikeService {
     private CArticleLikesMapper likesMapper;
 
     @Autowired
-    private RedisServiceImpl redisService;
+    private RedisService redisService;
 
     @Autowired
     private UserService userService;
